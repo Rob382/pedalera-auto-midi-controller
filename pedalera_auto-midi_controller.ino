@@ -5,167 +5,167 @@
 TM1637Display Display(CLK, DIO);
 
 ///////////////////////////////////////////1st PAIR OF BUTTONS///////////////////////////////////////////
-bool  bothchecker = false;
-bool longpressboth = false;
+byte  bothchecker = false;
+byte longpressboth = false;
 
 //// SWITCH 0 ////
 
 static const int buttonPin = 4;                    // switch pin
-int buttonStatePrevious = LOW;                      // previousstate of the switch
+byte buttonStatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long buttonLongPressMillis;                // Time in ms when we the button was pressed
-bool buttonStateLongPress = false;                  // True if it is a long press
+byte buttonStateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButtonMillis;                 // Timestamp of the latest reading
 
 unsigned long buttonPressDuration;                  // Time the button is pressed in ms
 
-int buttonState;
-bool shortpress = false;
-bool longpress = false;
+byte buttonState;
+byte shortpress = false;
+byte longpress = false;
 
 //// SWITCH 1 ////
 
 static const int button1Pin = 3;                    // switch pin
-int button1StatePrevious = LOW;                      // previousstate of the switch
+byte button1StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button1LongPressMillis;                // Time in ms when we the button was pressed
-bool button1StateLongPress = false;                  // True if it is a long press
+byte button1StateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButton1Millis;                 // Timestamp of the latest reading
 
 unsigned long button1PressDuration;
 
-int button1State;
-bool shortpress1 = false;
-bool longpress1 = false;
+byte button1State;
+byte shortpress1 = false;
+byte longpress1 = false;
 
 ///////////////////////////////////////////2nd PAIR OF BUTTONS///////////////////////////////////////////
-bool  bothchecker2 = false;
-bool longpressboth2 = false;
+byte  bothchecker2 = false;
+byte longpressboth2 = false;
 
 //// SWITCH 2 ////
 
 static const int button2Pin = 7;                    // switch pin
-int button2StatePrevious = LOW;                      // previousstate of the switch
+byte button2StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button2LongPressMillis;                // Time in ms when we the button was pressed
-bool button2StateLongPress = false;                  // True if it is a long press
+byte button2StateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButton2Millis;                 // Timestamp of the latest reading
 
 unsigned long button2PressDuration;                  // Time the button is pressed in ms
 
-int button2State;
-bool shortpress2 = false;
-bool longpress2 = false;
+byte button2State;
+byte shortpress2 = false;
+byte longpress2 = false;
 
 //// SWITCH 3 ////
 
 static const int button3Pin = 8;                    // switch pin
-int button3StatePrevious = LOW;                      // previousstate of the switch
+byte button3StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button3LongPressMillis;                // Time in ms when we the button was pressed
-bool button3StateLongPress = false;                  // True if it is a long press
+byte button3StateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButton3Millis;                 // Timestamp of the latest reading
 
 unsigned long button3PressDuration;
 
-int button3State;
-bool shortpress3 = false;
-bool longpress3 = false;
+byte button3State;
+byte shortpress3 = false;
+byte longpress3 = false;
 
 ///////////////////////////////////////////3rd PAIR OF BUTTONS///////////////////////////////////////////
-bool  bothchecker3 = false;
-bool longpressboth3 = false;
+byte  bothchecker3 = false;
+byte longpressboth3 = false;
 
 //// SWITCH 4 ////
 
 static const int button4Pin = 11;                    // switch pin
-int button4StatePrevious = LOW;                      // previousstate of the switch
+byte button4StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button4LongPressMillis;                // Time in ms when we the button was pressed
-bool button4StateLongPress = false;                  // True if it is a long press
+byte button4StateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButton4Millis;                 // Timestamp of the latest reading
 
 unsigned long button4PressDuration;                  // Time the button is pressed in ms
 
-int button4State;
-bool shortpress4 = false;
-bool longpress4 = false;
+byte button4State;
+byte shortpress4 = false;
+byte longpress4 = false;
 
 //// SWITCH 5 ////
 int analogsw5read;
 
-static const int button5Pin = 16;                    // switch pin
+//static const int button5Pin = 16;                    // esta la podría borrar!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 int button5StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button5LongPressMillis;                // Time in ms when we the button was pressed
-bool button5StateLongPress = false;                  // True if it is a long press
+byte button5StateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButton5Millis;                 // Timestamp of the latest reading
 
 unsigned long button5PressDuration;
 
-int button5State;
-bool shortpress5 = false;
-bool longpress5 = false;
+byte button5State;
+byte shortpress5 = false;
+byte longpress5 = false;
 
 ///////////////////////////////////////////4th PAIR OF BUTTONS///////////////////////////////////////////
-bool  bothchecker4 = false;
-bool longpressboth4 = false;
+byte  bothchecker4 = false;
+byte longpressboth4 = false;
 
 //// SWITCH 6 ////
 
 static const int button6Pin = 18;                    // A6
-int button6StatePrevious = LOW;                      // previousstate of the switch
+byte button6StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button6LongPressMillis;                // Time in ms when we the button was pressed
-bool button6StateLongPress = false;                  // True if it is a long press
+byte button6StateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButton6Millis;                 // Timestamp of the latest reading
 
 unsigned long button6PressDuration;                  // Time the button is pressed in ms
 
-int button6State;
-bool shortpress6 = false;
-bool longpress6 = false;
+byte button6State;
+byte shortpress6 = false;
+byte longpress6 = false;
 
 //// SWITCH 7 ////
 
 static const int button7Pin = 19;                    // A7
-int button7StatePrevious = LOW;                      // previousstate of the switch
+byte button7StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button7LongPressMillis;                // Time in ms when we the button was pressed
-bool button7StateLongPress = false;                  // True if it is a long press
+byte button7StateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButton7Millis;                 // Timestamp of the latest reading
 
 unsigned long button7PressDuration;
 
-int button7State;
-bool shortpress7 = false;
-bool longpress7 = false;
+byte button7State;
+byte shortpress7 = false;
+byte longpress7 = false;
 
 ////////////////////////////////////////////switch 8 (alt)/////////////////////////////////////////////
 
 //// SWITCH 8 alt  ////
 
 static const int button8Pin = 2;                    // switch pin
-int button8StatePrevious = LOW;                      // previousstate of the switch
+byte button8StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button8LongPressMillis;                // Time in ms when we the button was pressed
-bool button8StateLongPress = false;                  // True if it is a long press
+byte button8StateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButton8Millis;                 // Timestamp of the latest reading
 
 unsigned long button8PressDuration;
 
-int button8State;
-bool shortpress8 = false;
-bool longpress8 = false;
+byte button8State;
+byte shortpress8 = false;
+byte longpress8 = false;
 
 ////////////////////////////////////////////////// GENERAL /////////////////////////////////////////////
 unsigned long minButtonLongPressDuration = 3000;    // Time we wait before we see the press as a long press
@@ -174,26 +174,66 @@ const int intervalButton = 50;                      // Time between two readings
 unsigned long currentMillis;          // Variabele to store the number of milleseconds since the Arduino has started
 
 unsigned long lastsyncread = 0;
-bool sync = false;
-bool syncallflag = false;
-bool syncall = false;
+byte sync = false;
+byte syncallflag = false;
+byte syncall = false;
 unsigned long lastsyncallflag = 0;
-int synccounter = 0;                    //contador de clicks
+byte synccounter = 0;                    //contador de clicks
 unsigned long lastsynccounter = 0;          //millis para control del contador
 
-int ledpin = 13;
+byte clickstocount = 0;
+
+byte ledpin = 13;
 
 ////////////////////////////////////////////switches del cd4066/////////////////////////////////////////////
-int sw1;
-int sw2;
+byte sw1;
+byte sw2;
 const int sw1ctrl = 9;
 const int sw2ctrl = 10;
 unsigned long lastSw1Ctrl = 0;
 unsigned long lastSw2Ctrl = 0;
-bool sw1ctrlstate;
-bool sw2ctrlstate;
+byte sw1ctrlstate;
+byte sw2ctrlstate;
 
+///////////////////////////////////////////////////menú///////////////////////////////////////////////////
+byte trackuniarray[10];
+byte trackdecarray[10];
 
+byte arriba = LOW;
+byte select = LOW;
+byte abajo = LOW;
+byte mostrararray = LOW;
+byte cursorpin = LOW;
+//menú
+byte cursor1 = false;
+byte showunidigit = true;
+byte showdecdigit = true;
+byte menustate = 1;
+byte nclicksuni = 0;
+byte nclicksdec = 0;
+byte ntrackdec = 0;
+byte ntrackuni = 0;
+byte menu_active = false;
+byte menu_out = false;
+unsigned long lastmenu_out = 0;
+unsigned long lastunimillis = 0;
+unsigned long lastdecmillis = 0;
+unsigned long lastarriba = 0;
+unsigned long lastselect = 0;
+unsigned long lastabajo = 0;
+unsigned long lastmostrararray = 0;
+unsigned long lastcursorpin = 0;
+const uint8_t msg[] = {
+  SEG_A | SEG_B | SEG_C,                          //t
+  SEG_E | SEG_G,                                  //r
+  
+};
+const uint8_t blank[] = {SEG_D,};
+
+const uint8_t msg2[] = {
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+  SEG_D | SEG_E | SEG_F,                          //L
+};
 
 
 void setup() {
@@ -204,7 +244,7 @@ void setup() {
   pinMode(button2Pin, INPUT);          // set buttonPin as input
   pinMode(button3Pin, INPUT);          // set buttonPin as input
   pinMode(button4Pin, INPUT);          // set buttonPin as input
-  pinMode(button5Pin, INPUT);          // set buttonPin as input
+//  pinMode(button5Pin, INPUT);          // set buttonPin as input
   pinMode(button6Pin, INPUT);          // set buttonPin as input
   pinMode(button7Pin, INPUT);          // set buttonPin as input
   pinMode(button8Pin, INPUT);          // set buttonPin as input
@@ -885,7 +925,7 @@ void swcontrol_short_on () {
     sw1ctrlstate = true;                //control de la salida
     Display.showNumberDec(50, false, 2, 0);
     }
-    if (synccounter >= 5){
+    if (synccounter >= clickstocount+1){
     digitalWrite (sw1ctrl, HIGH);       //activa la salida
     Serial.println("sw1ctrl 4066 HIGH segunda vez");
     lastsynccounter = millis();             //millis control salida
@@ -923,11 +963,31 @@ void swcontrol_short_on () {
   }
   //////////4th pair////////////
   if (shortpress6 == true) {
-    Display.showNumberDec(56, false, 2, 0);
+    if (ntrackuni > 0){ntrackuni = ntrackuni-1;}
+        else {ntrackuni = 9;}
+    Display.setSegments(msg, 2, 0);
+    Display.showNumberDec(ntrackdec, false, 1, 2);
+    Display.showNumberDec(ntrackuni, false, 1, 3);
+    clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
+    Serial.print("track abajo ");
+    Serial.print(ntrackdec);
+    Serial.println(ntrackuni);
+    Serial.print("clicks to be counted = ");
+    Serial.println(clickstocount);
     shortpress6 = false;
   }
   if (shortpress7 == true) {
-    Display.showNumberDec(57, false, 2, 0);
+     if (ntrackuni < 9){ntrackuni = ntrackuni+1;}
+        else {ntrackuni = 0;}
+     Display.setSegments(msg, 2, 0);
+     Display.showNumberDec(ntrackdec, false, 1, 2);
+     Display.showNumberDec(ntrackuni, false, 1, 3);
+     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
+     Serial.print("track arriba ");
+     Serial.print(ntrackdec);
+    Serial.println(ntrackuni);
+     Serial.print("clicks to be counted = ");
+    Serial.println(clickstocount);
     shortpress7 = false;
   }
 }
@@ -974,6 +1034,8 @@ if (longpressboth == true) {
   }
 /////////3rd pair/////////
   if (longpressboth3 == true) {
+    menu_active = true;
+    Serial.println("entrando al menu");
     Display.showNumberDec(83, false, 2, 0);
     Serial.println("longpressboth3");
     longpressboth3 = false;
@@ -1021,6 +1083,213 @@ void swaltcontrol(){
     longpress8 = false;
   }
 }
+////////////////////////////////////////////////menu functions////////////////////////////////////////////
+void menu_1(){
+  Display.setSegments(msg, 2, 0);
+  Display.showNumberDec(ntrackdec, false, 1, 2);
+  Display.showNumberDec(ntrackuni, false, 1, 3);
+}
+
+void accion_1(){
+   while (select == LOW){
+        menu_3();
+    
+    if (cursor1 == false){                                          //estamos en unidades
+      if ((currentMillis - lastunimillis > 250)){
+        if (showunidigit == true){
+        Display.showNumberDec(ntrackuni, false, 1, 3);
+        }
+        if (showunidigit == false){
+        Display.setSegments(blank, 1, 3);
+        }
+        showunidigit = !showunidigit;
+        lastunimillis = millis();
+      }
+      arriba = digitalRead(4);
+      if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
+        if (ntrackuni < 9){ntrackuni = ntrackuni+1;}
+        else {ntrackuni = 0;
+        ntrackdec = ntrackdec+1;
+        Display.showNumberDec(ntrackdec, false, 1, 2);}
+        lastarriba = millis();
+      }
+       abajo = digitalRead(3);
+      if ((abajo == HIGH) && (currentMillis - lastarriba > 350)){
+        if (ntrackuni > 0){ntrackuni = ntrackuni-1;}
+        else {ntrackuni = 9;
+        if (ntrackdec != 0){
+        ntrackdec = ntrackdec-1;
+        Display.showNumberDec(ntrackdec, false, 1, 2);}}
+        lastarriba = millis();
+      }
+      
+    }
+
+    if (cursor1 == true){                                          //estamos en decenas
+       if ((currentMillis - lastdecmillis > 250)){
+        if (showdecdigit == true){
+        Display.showNumberDec(ntrackdec, false, 1, 2);
+        }
+        if (showdecdigit == false){
+        Display.setSegments(blank, 1, 2);
+        }
+        showdecdigit = !showdecdigit;
+        lastdecmillis = millis();
+      }
+      arriba = digitalRead(4);
+      if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
+        if (ntrackdec < 9){ntrackdec = ntrackdec+1;}
+        else {ntrackdec = 0;}
+        lastarriba = millis();
+      }
+       abajo = digitalRead(3);
+      if ((abajo == HIGH) && (currentMillis - lastabajo > 350)){
+        if (ntrackdec > 0){ntrackdec = ntrackdec-1;}
+        else {ntrackdec = 9;}
+        lastabajo = millis();
+      }
+      
+    }
+    cursorpin = digitalRead(8);
+    if ((cursorpin == HIGH)&&(currentMillis - lastcursorpin > 250)){
+      Display.showNumberDec(ntrackdec, false, 1, 2);
+      Display.showNumberDec(ntrackuni, false, 1, 3);
+      cursor1 = !cursor1;
+      lastcursorpin = millis();
+    }
+    currentMillis = millis();
+    select = digitalRead(2);
+    menu_out = digitalRead(A5);             //boton 4 para salir del menú
+    
+    if (menu_out == true && currentMillis - lastmenu_out > 500){
+    menustate = 1;
+    menu_active = false;
+    menu_out = false;
+    cursor1 = false;
+    lastmenu_out = millis();
+    delay (300);
+    return;
+  }
+  }
+  if (select == HIGH && currentMillis - lastselect > 500){
+    menustate = 2;
+    select = LOW;
+    cursor1 = false;
+    lastselect = millis();
+    delay (300);
+  }
+}
+
+void menu_2(){
+  Display.setSegments(msg2, 2, 0);
+  nclicksuni = trackuniarray[ntrackuni];
+  nclicksdec = trackdecarray[ntrackuni];
+  Display.showNumberDec(nclicksdec, false, 1, 2);
+  Display.showNumberDec(nclicksuni, false, 1, 3);
+  
+
+}
+
+void accion_2(){     
+     while (select == LOW){
+        menu_3();
+      
+    if (cursor1 == false){                                          //estamos en unidades
+      if ((currentMillis - lastunimillis > 250)){
+        if (showunidigit == true){
+        Display.showNumberDec(nclicksuni, false, 1, 3);
+        }
+        if (showunidigit == false){
+        Display.setSegments(blank, 1, 3);
+        }
+        showunidigit = !showunidigit;
+        lastunimillis = millis();
+      }
+      arriba = digitalRead(4);
+      if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
+        if (nclicksuni < 9){nclicksuni = nclicksuni+1;}
+        else {nclicksuni = 0;
+        nclicksdec = nclicksdec+1;
+        Display.showNumberDec(nclicksdec, false, 1, 2);}
+        lastarriba = millis();
+      }
+       abajo = digitalRead(3);
+      if ((abajo == HIGH) && (currentMillis - lastarriba > 350)){
+        if (nclicksuni > 0){nclicksuni = nclicksuni-1;}
+        else {nclicksuni = 9;
+         if (nclicksdec != 0){
+        nclicksdec = nclicksdec-1;
+        Display.showNumberDec(nclicksdec, false, 1, 2);}}
+        lastarriba = millis();
+      }
+      
+    }
+
+    if (cursor1 == true){                                          //estamos en decenas
+       if ((currentMillis - lastdecmillis > 250)){
+        if (showdecdigit == true){
+        Display.showNumberDec(nclicksdec, false, 1, 2);
+        }
+        if (showdecdigit == false){
+        Display.setSegments(blank, 1, 2);
+        }
+        showdecdigit = !showdecdigit;
+        lastdecmillis = millis();
+      }
+      arriba = digitalRead(4);
+      if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
+        if (nclicksdec < 9){nclicksdec = nclicksdec+1;}
+        else {nclicksdec = 0;}
+        lastarriba = millis();
+      }
+      abajo = digitalRead(3);
+      if ((abajo == HIGH) && (currentMillis - lastarriba > 350)){
+        if (nclicksdec > 0){nclicksdec = nclicksdec-1;}
+        else {nclicksdec = 9;}
+        lastarriba = millis();
+      }
+      
+    }
+    cursorpin = digitalRead(8);
+    if ((cursorpin == HIGH)&&(currentMillis - lastcursorpin > 250)){
+      Display.showNumberDec(nclicksdec, false, 1, 2);
+      Display.showNumberDec(nclicksuni, false, 1, 3);
+      cursor1 = !cursor1;
+      lastcursorpin = millis();
+    }
+    currentMillis = millis();
+    select = digitalRead(2);
+  } 
+  if (select == HIGH && currentMillis - lastselect > 500){
+    trackdecarray[ntrackuni] = nclicksdec;    //guarda valores en el arreglo
+    trackuniarray[ntrackuni] = nclicksuni;
+    menustate = 1;
+    select = LOW;
+    cursor1 = false;
+    lastselect = millis();
+    delay (300);
+  }
+}
+
+void menu_3(){
+   mostrararray = digitalRead(7);
+
+    if (mostrararray == HIGH && currentMillis - lastmostrararray > 500){
+      Serial.print("array [0] = "); Serial.print(trackdecarray[0]);Serial.println(trackuniarray[0]);
+      Serial.print("array [1] = "); Serial.print(trackdecarray[1]);Serial.println(trackuniarray[1]);
+      Serial.print("array [2] = "); Serial.print(trackdecarray[2]);Serial.println(trackuniarray[2]);
+      Serial.print("array [3] = "); Serial.print(trackdecarray[3]);Serial.println(trackuniarray[3]);
+      Serial.print("array [4] = "); Serial.print(trackdecarray[4]);Serial.println(trackuniarray[4]);
+      Serial.print("array [5] = "); Serial.print(trackdecarray[5]);Serial.println(trackuniarray[5]);
+      Serial.print("array [6] = "); Serial.print(trackdecarray[6]);Serial.println(trackuniarray[6]);
+      Serial.print("array [7] = "); Serial.print(trackdecarray[7]);Serial.println(trackuniarray[7]);
+      Serial.print("array [8] = "); Serial.print(trackdecarray[8]);Serial.println(trackuniarray[8]);
+      Serial.print("array [9] = "); Serial.print(trackdecarray[9]);Serial.println(trackuniarray[9]);
+
+      mostrararray = LOW;
+      lastmostrararray = millis();}
+}
+
 /////////////////////////////////////////////////sync//////////////////////////////////////////////////////
 void syncfn() {
 
@@ -1071,4 +1340,9 @@ void loop() {
   swcontrol_long_on();
   swaltcontrol();
   swcontrol_off ();
+  if (menu_active == true){
+    if(menustate == 3){menu_3();}
+    if(menustate == 2){menu_2(); accion_2();}
+    if(menustate == 1){menu_1(); accion_1();}
+  }
 }
