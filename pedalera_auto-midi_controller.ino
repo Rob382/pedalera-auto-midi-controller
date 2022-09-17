@@ -167,8 +167,10 @@ byte button8State;
 byte shortpress8 = false;
 byte longpress8 = false;
 
+byte alt = false;                                 //variable para revisar funciones alternas
+
 ////////////////////////////////////////////////// GENERAL /////////////////////////////////////////////
-unsigned long minButtonLongPressDuration = 3000;    // Time we wait before we see the press as a long press
+unsigned long minButtonLongPressDuration = 2000;    // Time we wait before we see the press as a long press
 const int intervalButton = 50;                      // Time between two readings of the button state
 
 unsigned long currentMillis;          // Variabele to store the number of milleseconds since the Arduino has started
@@ -184,6 +186,9 @@ unsigned long lastsynccounter = 0;          //millis para control del contador
 byte clickstocount = 0;
 
 byte ledpin = 13;
+
+byte msgsent = false;
+unsigned long lastmsgsent = 0;
 
 ////////////////////////////////////////////switches del cd4066/////////////////////////////////////////////
 byte sw1;
@@ -224,9 +229,8 @@ unsigned long lastabajo = 0;
 unsigned long lastmostrararray = 0;
 unsigned long lastcursorpin = 0;
 const uint8_t msg[] = {
-  SEG_A | SEG_B | SEG_C,                          //t
+  SEG_G | SEG_D | SEG_E | SEG_F,                  //t
   SEG_E | SEG_G,                                  //r
-  
 };
 const uint8_t blank[] = {SEG_D,};
 
@@ -234,8 +238,55 @@ const uint8_t msg2[] = {
   SEG_A | SEG_D | SEG_E | SEG_F,                  //C
   SEG_D | SEG_E | SEG_F,                          //L
 };
-
-
+const uint8_t msg3[] = {
+  SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
+  SEG_B | SEG_C | SEG_D | SEG_G | SEG_F,          //Y
+  SEG_C | SEG_E | SEG_G,                          //n
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+};
+const uint8_t msg4[] = {
+  SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
+  SEG_D | SEG_E | SEG_F,                          //L
+  SEG_D | SEG_E | SEG_F,                          //L
+};
+///////////////////////////////////menu messages/////////////////////////
+const uint8_t msg5[] = {
+ SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+  SEG_A | SEG_B | SEG_D | SEG_C | SEG_E | SEG_F,  //O
+  SEG_A | SEG_G | SEG_E | SEG_F,                  //F
+  SEG_A | SEG_B | SEG_D | SEG_C | SEG_G | SEG_F,  //g
+};
+const uint8_t msg6[] = {
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+  SEG_D | SEG_E | SEG_F,                          //L
+  SEG_B | SEG_C,                                  //i
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+};
+const uint8_t msg7[] = {
+  SEG_A | SEG_B | SEG_G | SEG_E | SEG_F,          //P
+  SEG_D | SEG_E | SEG_F,                          //L
+  SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
+  SEG_B | SEG_C | SEG_D | SEG_G | SEG_F,          //Y
+};
+///////////////////////////////////////////alt message///////////////
+  const uint8_t msg8[] = {
+  SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
+  SEG_D | SEG_E | SEG_F,                          //L
+  SEG_G | SEG_D | SEG_E | SEG_F,                  //t
+};
+///////////////////////////////////////////undo messages///////////////
+  const uint8_t msg9[] = {
+  SEG_C | SEG_B | SEG_D | SEG_E | SEG_F,          //u
+  SEG_C | SEG_E | SEG_G,                          //n
+  SEG_C | SEG_B | SEG_D | SEG_E | SEG_G,          //d
+  SEG_C | SEG_D | SEG_E | SEG_G,                  //o
+  };
+  const uint8_t msg10[] = {
+  SEG_C | SEG_B | SEG_D | SEG_E | SEG_F,          //u
+  SEG_C | SEG_E | SEG_G,                          //n
+  SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
+  SEG_E | SEG_G,                                  //r
+  };
 void setup() {
   Serial.begin(9600);                 // Initialise the serial monitor
 
@@ -257,7 +308,15 @@ void setup() {
   Serial.println("Press button");
 
   Display.setBrightness(5);
+    inicio ();
+}
 
+void inicio(){
+    Display.setSegments(msg, 2, 0);
+    Display.showNumberDec(ntrackdec, false, 1, 2);
+    Display.showNumberDec(ntrackuni, false, 1, 3);
+    clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
+    return;
 }
 
 ////////////////////////////////////////////1st pair reading///////////////////////////////////////////////////
@@ -277,6 +336,7 @@ void readButtonState() {
       buttonLongPressMillis = currentMillis;
       buttonStatePrevious = HIGH;
       Serial.println("Button pressed");
+      msgsent = false;                    //cancela el mensaje enviado
     }
 
     // Calculate how long the button has been pressed
@@ -353,6 +413,7 @@ void readButton1State() {
       button1LongPressMillis = currentMillis;
       button1StatePrevious = HIGH;
       Serial.println("Button1 pressed");
+      msgsent = false;                    //cancela el mensaje enviado
     }
 
     // Calculate how long the button has been pressed
@@ -381,14 +442,15 @@ void readButton1State() {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
       if (button1PressDuration < minButtonLongPressDuration) {
-        shortpress = false;
+        if (synccounter <= 1){shortpress = false;
         shortpress1 = true;
         shortpress2 = false;
         shortpress3 = false;
         shortpress4 = false;
         shortpress5 = false;
         shortpress6 = false;
-        shortpress7 = false;
+        shortpress7 = false;}
+        if (synccounter > 1){syncreccancel();}
         Serial.println("Button1 pressed shortly");
       }
     }
@@ -417,6 +479,7 @@ void readButton2State() {
       button2LongPressMillis = currentMillis;
       button2StatePrevious = HIGH;
       Serial.println("Button2 pressed");
+      msgsent = false;                    //cancela el mensaje enviado
     }
 
     // Calculate how long the button has been pressed
@@ -457,14 +520,14 @@ void readButton2State() {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
       if (button2PressDuration < minButtonLongPressDuration) {
-        shortpress = false;
+         if (synccounter <= 1){shortpress = false;
         shortpress1 = false;
         shortpress2 = true;
         shortpress3 = false;
         shortpress4 = false;
         shortpress5 = false;
         shortpress6 = false;
-        shortpress7 = false;
+        shortpress7 = false;}
         Serial.println("Button2 pressed shortly");
       }
     }
@@ -493,6 +556,7 @@ void readButton3State() {
       button3LongPressMillis = currentMillis;
       button3StatePrevious = HIGH;
       Serial.println("Button3 pressed");
+      msgsent = false;                    //cancela el mensaje enviado
     }
 
     // Calculate how long the button has been pressed
@@ -522,14 +586,14 @@ void readButton3State() {
       //       and can be removed.
       if (button3PressDuration < minButtonLongPressDuration) {
         Serial.println("Button3 pressed shortly");
-        shortpress = false;
+         if (synccounter <= 1){shortpress = false;
         shortpress1 = false;
         shortpress2 = false;
         shortpress3 = true;
         shortpress4 = false;
         shortpress5 = false;
         shortpress6 = false;
-        shortpress7 = false;
+        shortpress7 = false;}
       }
     }
 
@@ -557,6 +621,7 @@ void readButton4State() {
       button4LongPressMillis = currentMillis;
       button4StatePrevious = HIGH;
       Serial.println("Button4 pressed");
+      msgsent = false;                    //cancela el mensaje enviado
     }
 
     // Calculate how long the button has been pressed
@@ -597,14 +662,14 @@ void readButton4State() {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
       if (button4PressDuration < minButtonLongPressDuration) {
-        shortpress = false;
+         if (synccounter <= 1){shortpress = false;
         shortpress1 = false;
         shortpress2 = false;
         shortpress3 = false;
         shortpress4 = true;
         shortpress5 = false;
         shortpress6 = false;
-        shortpress7 = false;
+        shortpress7 = false;}
         Serial.println("Button4 pressed shortly");
       }
     }
@@ -640,6 +705,7 @@ void readButton5State() {
       button5LongPressMillis = currentMillis;
       button5StatePrevious = HIGH;
       Serial.println("Button5 pressed");
+      msgsent = false;                    //cancela el mensaje enviado
     }
 
     // Calculate how long the button has been pressed
@@ -669,14 +735,14 @@ void readButton5State() {
       //       and can be removed.
       if (button5PressDuration < minButtonLongPressDuration) {
         Serial.println("Button5 pressed shortly");
-        shortpress = false;
+         if (synccounter <= 1){shortpress = false;
         shortpress1 = false;
         shortpress2 = false;
         shortpress3 = false;
         shortpress4 = false;
         shortpress5 = true;
         shortpress6 = false;
-        shortpress7 = false;
+        shortpress7 = false;}
       }
     }
 
@@ -704,6 +770,7 @@ void readButton6State() {
       button6LongPressMillis = currentMillis;
       button6StatePrevious = HIGH;
       Serial.println("Button6 pressed");
+      msgsent = false;                    //cancela el mensaje enviado
     }
 
     // Calculate how long the button has been pressed
@@ -744,14 +811,14 @@ void readButton6State() {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
       if (button6PressDuration < minButtonLongPressDuration) {
-        shortpress = false;
+         if (synccounter <= 1){shortpress = false;
         shortpress1 = false;
         shortpress2 = false;
         shortpress3 = false;
         shortpress4 = false;
         shortpress5 = false;
         shortpress6 = true;
-        shortpress7 = false;
+        shortpress7 = false;}
         Serial.println("Button6 pressed shortly");
       }
     }
@@ -780,6 +847,7 @@ void readButton7State() {
       button7LongPressMillis = currentMillis;
       button7StatePrevious = HIGH;
       Serial.println("Button7 pressed");
+      msgsent = false;                    //cancela el mensaje enviado
     }
 
     // Calculate how long the button has been pressed
@@ -809,14 +877,14 @@ void readButton7State() {
       //       and can be removed.
       if (button7PressDuration < minButtonLongPressDuration) {
         Serial.println("Button7 pressed shortly");
-        shortpress = false;
+         if (synccounter <= 1){shortpress = false;
         shortpress1 = false;
         shortpress2 = false;
         shortpress3 = false;
         shortpress4 = false;
         shortpress5 = false;
         shortpress6 = false;
-        shortpress7 = true;
+        shortpress7 = true;}
       }
     }
 
@@ -844,6 +912,7 @@ void readButton8State() {
       button8LongPressMillis = currentMillis;
       button8StatePrevious = HIGH;
       Serial.println("alt Button pressed");
+      msgsent = false;                    //cancela el mensaje enviado
     }
 
     // Calculate how long the button has been pressed
@@ -914,34 +983,30 @@ void swcontrol_off () {
 void swcontrol_short_on () {
   //////////1st pair////////////
   if (shortpress == true && currentMillis - lastsynccounter >= 60 ) {
-    synccounter = synccounter+1;                  //incrementa el contador de controlsync
-    Serial.print ("synccounter = ");
-    Serial.println (synccounter);
+    if (sync == true && syncall == true) 
+    {syncrec();}
     
-    if (synccounter == 1){
-    digitalWrite (sw1ctrl, HIGH);       //activa la salida
-    Serial.println("sw1ctrl 4066 HIGH primera vez");
-    lastsynccounter = millis();             //millis control salida
-    sw1ctrlstate = true;                //control de la salida
-    Display.showNumberDec(50, false, 2, 0);
-    }
-    if (synccounter >= clickstocount+1){
-    digitalWrite (sw1ctrl, HIGH);       //activa la salida
-    Serial.println("sw1ctrl 4066 HIGH segunda vez");
-    lastsynccounter = millis();             //millis control salida
-    sw1ctrlstate = true;                //control de la salida
-    Display.showNumberDec(50, false, 2, 0);
+    if (sync == true && syncall == false){
+      if (syncallflag == true){syncrec();}}
+      
+    if (sync == false && syncall == false) {
+      //falta agregar la función stop+play(rec) unsynced
+      Serial.println("no hay función programada aún");
+      Display.showNumberDec(50, false, 2, 0);
     shortpress = false;
-    synccounter = 0;
-    }
-    if(shortpress1 == true || shortpress2 == true || shortpress3 == true || shortpress4 == true || shortpress5 == true || shortpress6 == true || shortpress7 == true){
-    shortpress = false;
-    synccounter = 0;
     }
   }
   if (shortpress1 == true) {
-    Display.showNumberDec(51, false, 2, 0);
-    shortpress1 = false;
+    if (alt == false){
+    Display.setSegments(msg9, 4, 0);
+    msgsent = true;
+    lastmsgsent = millis();
+    shortpress1 = false;}
+    if (alt == true){
+    Display.setSegments(msg10, 4, 0);
+    msgsent = true;
+    lastmsgsent = millis();
+    shortpress1 = false;}
   }
   //////////2nd pair////////////
   if (shortpress2 == true) {
@@ -997,11 +1062,6 @@ void swcontrol_long_on(){
 
 /////////1st pair/////////
 if (longpressboth == true) {
-    digitalWrite (sw2ctrl, HIGH);         //activa la salida
-    Serial.println("sw2ctrl HIGH");
-    sw2ctrlstate = true;                  //control de la salida
-    lastSw2Ctrl = millis();               //millis control salida
-    sync = !sync;
     Display.showNumberDec(81, false, 2, 0);
     Serial.println("longpressboth");
     longpressboth = false;
@@ -1018,8 +1078,15 @@ if (longpressboth == true) {
   }
 /////////2nd pair/////////
   if (longpressboth2 == true) {
-    Display.showNumberDec(82, false, 2, 0);
-    Serial.println("longpressboth2");
+    digitalWrite (sw2ctrl, HIGH);         //activa la salida
+    Serial.println("sw2ctrl HIGH");
+    sw2ctrlstate = true;                  //control de la salida
+    lastSw2Ctrl = millis();               //millis control salida
+    sync = !sync;
+    Display.setSegments(msg3, 4, 0);
+    msgsent = true;
+    lastmsgsent = millis();
+    Serial.println("longpressboth2 toogle sync");
     longpressboth2 = false;
   }
   if (longpress2 == true && longpressboth2 == false) {
@@ -1036,7 +1103,10 @@ if (longpressboth == true) {
   if (longpressboth3 == true) {
     menu_active = true;
     Serial.println("entrando al menu");
-    Display.showNumberDec(83, false, 2, 0);
+    Display.setSegments(msg6, 4, 0);
+    delay(750);
+    Display.setSegments(msg5, 4, 0);
+    delay(750);
     Serial.println("longpressboth3");
     longpressboth3 = false;
   }
@@ -1067,18 +1137,58 @@ if (longpressboth == true) {
     longpress7 = false;
   }
 }
+////////////////////////////////////////////////sync rec function/////////////////////////////////////////////
+void syncrec(){
+  synccounter = synccounter+1;                  //incrementa el contador de controlsync
+    Serial.print ("synccounter = ");
+    Serial.println (synccounter);
+    
+    if (synccounter == 1){
+    digitalWrite (sw1ctrl, HIGH);       //activa la salida
+    Serial.println("sw1ctrl 4066 HIGH primera vez");
+    lastsynccounter = millis();             //millis control salida
+    sw1ctrlstate = true;                //control de la salida
+    Display.showNumberDec(50, false, 2, 0);
+    }
+    if (synccounter >= clickstocount+1){
+    digitalWrite (sw1ctrl, HIGH);       //activa la salida
+    Serial.println("sw1ctrl 4066 HIGH segunda vez");
+    lastsynccounter = millis();             //millis control salida
+    sw1ctrlstate = true;                //control de la salida
+    Display.showNumberDec(50, false, 2, 0);
+    shortpress = false;
+    synccounter = 0;
+    }
+}
+void syncreccancel(){
+    synccounter = 0;
+    shortpress = false;
+    Serial.println("operación cancelada");
+    Serial.print("sync counter = ");
+    Serial.println(synccounter);
+    return;
+}
 ////////////////////////////////////////////////sw alt control//////////////////////////////////////
 void swaltcontrol(){
 
   //////////alt button////////////
   if (shortpress8 == true) {
-    Display.showNumberDec(58, false, 2, 0);
+    alt = !alt;
+    Serial.print("alt toogled ");
+    Serial.println(alt);
+    Display.clear();
+    Display.setSegments(msg8, 3, 1);
+    msgsent = true;
+    lastmsgsent = millis();
     shortpress8 = false;
   }
 
   if (longpress8 == true) {
     syncall = !syncall;
-    Display.showNumberDec(18, false, 2, 0);
+    Display.clear();
+    Display.setSegments(msg4, 3, 1);
+    msgsent = true;
+    lastmsgsent = millis();
     Serial.println("sync all");
     longpress8 = false;
   }
@@ -1105,7 +1215,7 @@ void accion_1(){
         showunidigit = !showunidigit;
         lastunimillis = millis();
       }
-      arriba = digitalRead(4);
+      arriba = digitalRead(19);
       if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
         if (ntrackuni < 9){ntrackuni = ntrackuni+1;}
         else {ntrackuni = 0;
@@ -1113,7 +1223,7 @@ void accion_1(){
         Display.showNumberDec(ntrackdec, false, 1, 2);}
         lastarriba = millis();
       }
-       abajo = digitalRead(3);
+       abajo = digitalRead(18);
       if ((abajo == HIGH) && (currentMillis - lastarriba > 350)){
         if (ntrackuni > 0){ntrackuni = ntrackuni-1;}
         else {ntrackuni = 9;
@@ -1136,13 +1246,13 @@ void accion_1(){
         showdecdigit = !showdecdigit;
         lastdecmillis = millis();
       }
-      arriba = digitalRead(4);
+      arriba = digitalRead(19);
       if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
         if (ntrackdec < 9){ntrackdec = ntrackdec+1;}
         else {ntrackdec = 0;}
         lastarriba = millis();
       }
-       abajo = digitalRead(3);
+       abajo = digitalRead(18);
       if ((abajo == HIGH) && (currentMillis - lastabajo > 350)){
         if (ntrackdec > 0){ntrackdec = ntrackdec-1;}
         else {ntrackdec = 9;}
@@ -1150,7 +1260,7 @@ void accion_1(){
       }
       
     }
-    cursorpin = digitalRead(8);
+    cursorpin = digitalRead(3);
     if ((cursorpin == HIGH)&&(currentMillis - lastcursorpin > 250)){
       Display.showNumberDec(ntrackdec, false, 1, 2);
       Display.showNumberDec(ntrackuni, false, 1, 3);
@@ -1159,7 +1269,7 @@ void accion_1(){
     }
     currentMillis = millis();
     select = digitalRead(2);
-    menu_out = digitalRead(A5);             //boton 4 para salir del menú
+    menu_out = digitalRead(4);             //boton 4 para salir del menú
     
     if (menu_out == true && currentMillis - lastmenu_out > 500){
     menustate = 1;
@@ -1167,7 +1277,8 @@ void accion_1(){
     menu_out = false;
     cursor1 = false;
     lastmenu_out = millis();
-    delay (300);
+    Display.setSegments(msg7, 4, 0);
+    delay (750);
     return;
   }
   }
@@ -1205,7 +1316,7 @@ void accion_2(){
         showunidigit = !showunidigit;
         lastunimillis = millis();
       }
-      arriba = digitalRead(4);
+      arriba = digitalRead(19);
       if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
         if (nclicksuni < 9){nclicksuni = nclicksuni+1;}
         else {nclicksuni = 0;
@@ -1213,7 +1324,7 @@ void accion_2(){
         Display.showNumberDec(nclicksdec, false, 1, 2);}
         lastarriba = millis();
       }
-       abajo = digitalRead(3);
+       abajo = digitalRead(18);
       if ((abajo == HIGH) && (currentMillis - lastarriba > 350)){
         if (nclicksuni > 0){nclicksuni = nclicksuni-1;}
         else {nclicksuni = 9;
@@ -1236,13 +1347,13 @@ void accion_2(){
         showdecdigit = !showdecdigit;
         lastdecmillis = millis();
       }
-      arriba = digitalRead(4);
+      arriba = digitalRead(19);
       if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
         if (nclicksdec < 9){nclicksdec = nclicksdec+1;}
         else {nclicksdec = 0;}
         lastarriba = millis();
       }
-      abajo = digitalRead(3);
+      abajo = digitalRead(18);
       if ((abajo == HIGH) && (currentMillis - lastarriba > 350)){
         if (nclicksdec > 0){nclicksdec = nclicksdec-1;}
         else {nclicksdec = 9;}
@@ -1250,7 +1361,7 @@ void accion_2(){
       }
       
     }
-    cursorpin = digitalRead(8);
+    cursorpin = digitalRead(3);
     if ((cursorpin == HIGH)&&(currentMillis - lastcursorpin > 250)){
       Display.showNumberDec(nclicksdec, false, 1, 2);
       Display.showNumberDec(nclicksuni, false, 1, 3);
@@ -1301,8 +1412,6 @@ void syncfn() {
   //currentMillis = millis();
   // read the input on analog pin 7:
   int sensorValue = analogRead(A7);
-  // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
-  float voltage = sensorValue * (5.0 / 1023.0);
   // print out the value you read:
   if ((sensorValue >= 50) && (currentMillis - lastsyncread >= 50)) {
     syncallflag = true;
@@ -1317,8 +1426,11 @@ void syncfn() {
   }
 }
 void loop() {
-  
   currentMillis = millis();    // store the current time
+  if (msgsent == true && currentMillis - lastmsgsent >= 2000){//mantiene mensajes por 2 segundos en pantalla
+    inicio();
+    msgsent = false;
+  }
   readButtonState();           // read the button state
   readButton1State();
   readButton2State();
@@ -1332,10 +1444,8 @@ void loop() {
     syncfn ();
   }
   if (syncall == true){
-//    Serial.println("sync all on");
     if (syncallflag == true){swcontrol_short_on();}} //si se activa syncall espera a la flag para activar las salidas
   if (syncall == false){
-//    Serial.println("sync all off");
     swcontrol_short_on();}        //si se desactiva syncall activa salidas sin esperar
   swcontrol_long_on();
   swaltcontrol();
@@ -1344,5 +1454,6 @@ void loop() {
     if(menustate == 3){menu_3();}
     if(menustate == 2){menu_2(); accion_2();}
     if(menustate == 1){menu_1(); accion_1();}
+    inicio ();
   }
 }
