@@ -1,3 +1,25 @@
+/*
+ * Bas on Tech - LONG PRESS BUTTON
+ * This course is part of the courses on https://arduino-tutorials.net
+ *  
+ * (c) Copyright 2019 - Bas van Dijk / Bas on Tech
+ * This code and course is copyrighted. It is not allowed to use these courses commercially
+ * without explicit written approval
+ * 
+ * YouTube:    https://www.youtube.com/c/BasOnTech
+ * Facebook:   https://www.facebook.com/BasOnTechChannel
+ * Instagram:  https://www.instagram.com/BasOnTech
+ * Twitter:    https://twitter.com/BasOnTech
+ *
+ */
+//7seg display
+#include <TM1637Display.h>
+#define CLK 6
+#define DIO 5
+TM1637Display Display(CLK, DIO);
+
+//// SWITCH 1 ////
+
 static const int buttonPin = 4;                    // switch pin
 int buttonStatePrevious = LOW;                      // previousstate of the switch
 
@@ -23,8 +45,15 @@ unsigned long previousButton1Millis;                 // Timestamp of the latest 
 unsigned long button1PressDuration;  
 
 //// GENERAL ////
+int buttonState;
+int button1State;
 bool  bothchecker = false;
 bool bothbuttonsStateLongPress = false;
+bool shortpress = false;
+bool shortpress1 = false;
+bool longpress = false;
+bool longpress1 = false;
+bool longpressboth = false;
 
 unsigned long currentMillis;          // Variabele to store the number of milleseconds since the Arduino has started
 
@@ -33,6 +62,8 @@ void setup() {
 
   pinMode(buttonPin, INPUT);          // set buttonPin as input
   Serial.println("Press button");
+
+  Display.setBrightness(5);
 
 }
 
@@ -43,7 +74,7 @@ void readButtonState() {
   if(currentMillis - previousButtonMillis > intervalButton) {
     
     // Read the digital value of the button (LOW/HIGH)
-    int buttonState = digitalRead(buttonPin);    
+    buttonState = digitalRead(buttonPin);    
 
     // If the button has been pushed AND
     // If the button wasn't pressed before AND
@@ -57,12 +88,22 @@ void readButtonState() {
     // Calculate how long the button has been pressed
     buttonPressDuration = currentMillis - buttonLongPressMillis;
 
+//............................ if both buttons have been long pressed
+    if  (button1State == HIGH && buttonState == HIGH && !button1StateLongPress && !buttonStateLongPress && ((buttonPressDuration >= minButtonLongPressDuration) )){
+        button1StateLongPress = true;
+        buttonStateLongPress = true;
+        bothchecker = true;
+        Serial.println("both buttons long pressed");
+        longpressboth = true;
+    }
+//.......................................................................................................
     // If the button is pressed AND
     // If there is no measurement running to determine how long the button is pressed AND
     // If the time the button has been pressed is larger or equal to the time needed for a long press
-    if (buttonState == HIGH && !buttonStateLongPress && buttonPressDuration >= minButtonLongPressDuration) {
+    if (buttonState == HIGH && button1State == LOW && !buttonStateLongPress && ((buttonPressDuration >= minButtonLongPressDuration) )) {
       buttonStateLongPress = true;
       Serial.println("Button long pressed");
+      longpress = true;
     }
       
     // If the button is released AND
@@ -70,7 +111,10 @@ void readButtonState() {
     if (buttonState == LOW && buttonStatePrevious == HIGH) {
       buttonStatePrevious = LOW;
       buttonStateLongPress = false;
+      bothchecker = false;
       Serial.println("Button released");
+      button1StatePrevious = LOW;
+      button1StateLongPress = false;
 
       // If there is no measurement running to determine how long the button was pressed AND
       // If the time the button has been pressed is smaller than the minimal time needed for a long press
@@ -78,7 +122,8 @@ void readButtonState() {
       //       if (!buttonStateLongPress && buttonPressDuration < minButtonLongPressDuration) {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
-      if (buttonPressDuration < minButtonLongPressDuration) {
+      if (buttonPressDuration < minButtonLongPressDuration){
+        shortpress = true;
         Serial.println("Button pressed shortly");
       }
     }
@@ -98,7 +143,7 @@ void readButton1State() {
   if(currentMillis - previousButton1Millis > intervalButton) {
     
     // Read the digital value of the button (LOW/HIGH)
-    int button1State = digitalRead(button1Pin);    
+    button1State = digitalRead(button1Pin);
 
     // If the button has been pushed AND
     // If the button wasn't pressed before AND
@@ -115,22 +160,17 @@ void readButton1State() {
     // If the button is pressed AND
     // If there is no measurement running to determine how long the button is pressed AND
     // If the time the button has been pressed is larger or equal to the time needed for a long press
-    if (button1State == HIGH && !button1StateLongPress && button1PressDuration >= minButtonLongPressDuration) {
+    if (button1State == HIGH && buttonState == LOW &&!button1StateLongPress && ((button1PressDuration >= minButtonLongPressDuration) )) {
       button1StateLongPress = true;
       Serial.println("Button1 long pressed");
+      longpress1 = true;
     }
-
-    if  (button1StateLongPress == true && buttonStateLongPress == true && bothchecker == false){
-        bothchecker = true;
-        Serial.println("both buttons long pressed");
-    }
-      
+          
     // If the button is released AND
     // If the button was pressed before
     if (button1State == LOW && button1StatePrevious == HIGH) {
       button1StatePrevious = LOW;
       button1StateLongPress = false;
-      bothchecker = false;
       Serial.println("Button1 released");
 
       // If there is no measurement running to determine how long the button was pressed AND
@@ -141,6 +181,7 @@ void readButton1State() {
       //       and can be removed.
       if (button1PressDuration < minButtonLongPressDuration) {
         Serial.println("Button1 pressed shortly");
+        shortpress1 = true;
       }
     }
     
@@ -151,9 +192,35 @@ void readButton1State() {
 
 }
 
+void sw_number (){
+  if (shortpress == true){
+  Display.showNumberDec(51, false, 2, 0);
+  shortpress = false;
+  }
+  if (shortpress1 == true){
+  Display.showNumberDec(52, false, 2, 0);
+  shortpress1 = false;
+  }
+
+  if (longpressboth == true){
+  Display.showNumberDec(81, false, 2, 0);
+  Serial.println("longpressboth");
+  longpressboth = false;
+  }
+   if (longpress == true && longpressboth == false){
+  Display.showNumberDec(11, false, 2, 0);
+  Serial.println("longpress");
+  longpress = false;}
+  if (longpress1 == true && longpressboth == false){
+  Display.showNumberDec(12, false, 2, 0);
+  Serial.println("longpress1");
+  longpress1 = false;}
+
+}
 void loop() {
 
   currentMillis = millis();    // store the current time
   readButtonState();           // read the button state
   readButton1State();
+  sw_number ();
 }
