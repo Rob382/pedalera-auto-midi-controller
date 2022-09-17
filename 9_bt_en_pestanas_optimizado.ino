@@ -25,14 +25,9 @@ byte longpressboth = false;
 //// SWITCH 0 ////
 
 #define buttonPin 4                    // switch pin
-byte buttonStatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long buttonLongPressMillis;                // Time in ms when we the button was pressed
 byte buttonStateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButtonMillis;                 // Timestamp of the latest reading
-
-unsigned long buttonPressDuration;                  // Time the button is pressed in ms
 
 byte buttonState;
 byte shortpress = false;
@@ -41,14 +36,9 @@ byte longpress = false;
 //// SWITCH 1 ////
 
 #define button1Pin 3                    // switch pin
-byte button1StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button1LongPressMillis;                // Time in ms when we the button was pressed
 byte button1StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton1Millis;                 // Timestamp of the latest reading
-
-unsigned long button1PressDuration;
 
 byte button1State;
 byte shortpress1 = false;
@@ -61,14 +51,9 @@ byte longpressboth2 = false;
 //// SWITCH 2 ////
 
 #define button2Pin 7                    // switch pin
-byte button2StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button2LongPressMillis;                // Time in ms when we the button was pressed
 byte button2StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton2Millis;                 // Timestamp of the latest reading
-
-unsigned long button2PressDuration;                  // Time the button is pressed in ms
 
 byte button2State;
 byte shortpress2 = false;
@@ -77,14 +62,9 @@ byte longpress2 = false;
 //// SWITCH 3 ////
 
 #define button3Pin 8                    // switch pin
-byte button3StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button3LongPressMillis;                // Time in ms when we the button was pressed
 byte button3StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton3Millis;                 // Timestamp of the latest reading
-
-unsigned long button3PressDuration;
 
 byte button3State;
 byte shortpress3 = false;
@@ -97,14 +77,9 @@ byte longpressboth3 = false;
 //// SWITCH 4 ////
 
 #define button4Pin 11                    // switch pin
-byte button4StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button4LongPressMillis;                // Time in ms when we the button was pressed
 byte button4StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton4Millis;                 // Timestamp of the latest reading
-
-unsigned long button4PressDuration;                  // Time the button is pressed in ms
 
 byte button4State;
 byte shortpress4 = false;
@@ -113,15 +88,10 @@ byte longpress4 = false;
 //// SWITCH 5 ////
 int analogsw5read;
 
-//static const int button5Pin = 16;                    // esta la podría borrar!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-int button5StatePrevious = LOW;                      // previousstate of the switch
-
 unsigned long button5LongPressMillis;                // Time in ms when we the button was pressed
 byte button5StateLongPress = false;                  // True if it is a long press
 
 unsigned long previousButton5Millis;                 // Timestamp of the latest reading
-
-unsigned long button5PressDuration;
 
 byte button5State;
 byte shortpress5 = false;
@@ -134,14 +104,9 @@ byte longpressboth4 = false;
 //// SWITCH 6 ////
 
 #define button6Pin 18                    // A6
-byte button6StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button6LongPressMillis;                // Time in ms when we the button was pressed
 byte button6StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton6Millis;                 // Timestamp of the latest reading
-
-unsigned long button6PressDuration;                  // Time the button is pressed in ms
 
 byte button6State;
 byte shortpress6 = false;
@@ -150,14 +115,9 @@ byte longpress6 = false;
 //// SWITCH 7 ////
 
 #define button7Pin 19                    // A7
-byte button7StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button7LongPressMillis;                // Time in ms when we the button was pressed
 byte button7StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton7Millis;                 // Timestamp of the latest reading
-
-unsigned long button7PressDuration;
 
 byte button7State;
 byte shortpress7 = false;
@@ -186,6 +146,12 @@ byte alt = false;                                 //variable para revisar funcio
 ////////////////////////////////////////////////// GENERAL /////////////////////////////////////////////
 unsigned long minButtonLongPressDuration = 2000;    // Time we wait before we see the press as a long press
 const int intervalButton = 50;                      // Time between two readings of the button state
+byte buttonStatePrevious = LOW;                      // previousstate of the first switch of the pair
+byte button1StatePrevious = LOW;                      // previousstate of the second switch of the pair
+unsigned long previousButtonMillis;                 // Timestamp of the latest reading 1st sw of the pair
+unsigned long previousButton1Millis;                 // Timestamp of the latest reading 2nd sw of the pair
+unsigned long buttonPressDuration;                  // Time the 1st sw of the pair is pressed in ms
+unsigned long button1PressDuration;                 // Time the 2nd sw of the pair is pressed in ms
 
 unsigned long currentMillis;          // Variabele to store the number of milleseconds since the Arduino has started
 
