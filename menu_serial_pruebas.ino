@@ -1,6 +1,7 @@
 int menustate = 1;
 char tecla;
 char nclicks;
+char ntrack;
 bool menutext1 = true;
 bool menutext2 = false;
 bool menutext3 = false;
@@ -13,26 +14,21 @@ Serial.begin(9600);
 void menu_1(){  
 while (Serial.available() == 0){
   if (menutext1 == true){
-    Serial.println("quieres activar la sincronización?");
-    Serial.println("Y/N");
+    Serial.println("selecciona el numero de track");
     menutext1 = false;
   }}}
 void accion_1(){
 tecla = Serial.read();
 if (tecla == '\n'){}
 else{
-Serial.print("tecla = ");
- Serial.println(tecla);
-  if ((tecla == 'y')&&(menustate == 1)){
+//Serial.print("tecla = ");
+// Serial.println(tecla);
     menustate = 2;
-   Serial.println("se activó la sincronización");
+    ntrack = tecla;
+   Serial.print("numero de track seleccionado = ");
+   Serial.println(ntrack);
    menutext2 = true;
-   }
- else if ((tecla == 'n')&&(menustate == 1)){
-    menustate = 1;
-   Serial.println("operación cancelada");
-   menutext1 = true;
-  }}}
+   }}
   
   void menu_2(){  
 while (Serial.available() == 0){
@@ -44,8 +40,8 @@ void accion_2(){
 tecla = Serial.read();
 if (tecla == '\n'){}
 else{
-Serial.print("tecla = ");
- Serial.println(tecla);
+//Serial.print("tecla = ");
+// Serial.println(tecla);
  nclicks = tecla;
     menustate = 3;
    Serial.print("numero de clicks = ");
@@ -64,8 +60,8 @@ void accion_3(){
 tecla = Serial.read();
 if (tecla == '\n'){}
 else{
-Serial.print("tecla = ");
- Serial.println(tecla);
+//Serial.print("tecla = ");
+// Serial.println(tecla);
   if ((tecla == 'y')&&(menustate == 3)){
     menustate = 1;
    Serial.println("sync all on");
