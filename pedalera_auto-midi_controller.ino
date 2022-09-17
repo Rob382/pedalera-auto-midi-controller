@@ -175,6 +175,11 @@ unsigned long currentMillis;          // Variabele to store the number of milles
 
 unsigned long lastsyncread = 0;
 bool sync = false;
+bool syncallflag = false;
+bool syncall = false;
+unsigned long lastsyncallflag = 0;
+int synccounter = 0;                    //contador de clicks
+unsigned long lastsynccounter = 0;          //millis para control del contador
 
 int ledpin = 13;
 
@@ -273,6 +278,13 @@ void readButtonState() {
       //       and can be removed.
       if (buttonPressDuration < minButtonLongPressDuration) {
         shortpress = true;
+        shortpress1 = false;
+        shortpress2 = false;
+        shortpress3 = false;
+        shortpress4 = false;
+        shortpress5 = false;
+        shortpress6 = false;
+        shortpress7 = false;
         Serial.println("Button pressed shortly");
       }
     }
@@ -329,8 +341,15 @@ void readButton1State() {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
       if (button1PressDuration < minButtonLongPressDuration) {
-        Serial.println("Button1 pressed shortly");
+        shortpress = false;
         shortpress1 = true;
+        shortpress2 = false;
+        shortpress3 = false;
+        shortpress4 = false;
+        shortpress5 = false;
+        shortpress6 = false;
+        shortpress7 = false;
+        Serial.println("Button1 pressed shortly");
       }
     }
 
@@ -398,7 +417,14 @@ void readButton2State() {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
       if (button2PressDuration < minButtonLongPressDuration) {
+        shortpress = false;
+        shortpress1 = false;
         shortpress2 = true;
+        shortpress3 = false;
+        shortpress4 = false;
+        shortpress5 = false;
+        shortpress6 = false;
+        shortpress7 = false;
         Serial.println("Button2 pressed shortly");
       }
     }
@@ -456,7 +482,14 @@ void readButton3State() {
       //       and can be removed.
       if (button3PressDuration < minButtonLongPressDuration) {
         Serial.println("Button3 pressed shortly");
+        shortpress = false;
+        shortpress1 = false;
+        shortpress2 = false;
         shortpress3 = true;
+        shortpress4 = false;
+        shortpress5 = false;
+        shortpress6 = false;
+        shortpress7 = false;
       }
     }
 
@@ -524,7 +557,14 @@ void readButton4State() {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
       if (button4PressDuration < minButtonLongPressDuration) {
+        shortpress = false;
+        shortpress1 = false;
+        shortpress2 = false;
+        shortpress3 = false;
         shortpress4 = true;
+        shortpress5 = false;
+        shortpress6 = false;
+        shortpress7 = false;
         Serial.println("Button4 pressed shortly");
       }
     }
@@ -589,7 +629,14 @@ void readButton5State() {
       //       and can be removed.
       if (button5PressDuration < minButtonLongPressDuration) {
         Serial.println("Button5 pressed shortly");
+        shortpress = false;
+        shortpress1 = false;
+        shortpress2 = false;
+        shortpress3 = false;
+        shortpress4 = false;
         shortpress5 = true;
+        shortpress6 = false;
+        shortpress7 = false;
       }
     }
 
@@ -657,7 +704,14 @@ void readButton6State() {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
       if (button6PressDuration < minButtonLongPressDuration) {
+        shortpress = false;
+        shortpress1 = false;
+        shortpress2 = false;
+        shortpress3 = false;
+        shortpress4 = false;
+        shortpress5 = false;
         shortpress6 = true;
+        shortpress7 = false;
         Serial.println("Button6 pressed shortly");
       }
     }
@@ -715,6 +769,13 @@ void readButton7State() {
       //       and can be removed.
       if (button7PressDuration < minButtonLongPressDuration) {
         Serial.println("Button7 pressed shortly");
+        shortpress = false;
+        shortpress1 = false;
+        shortpress2 = false;
+        shortpress3 = false;
+        shortpress4 = false;
+        shortpress5 = false;
+        shortpress6 = false;
         shortpress7 = true;
       }
     }
@@ -783,8 +844,8 @@ void readButton8State() {
 
 }
 
-/////////////////////////////////////////////sw control/////////////////////////////////////////////////////
-void swcontrl () {
+/////////////////////////////////////////////sw control off/////////////////////////////////////////////////////
+void swcontrol_off () {
   if ((currentMillis - lastSw1Ctrl > 1) && (sw1ctrlstate == HIGH)) {
     digitalWrite (sw1ctrl, LOW);
     Serial.println("sw1ctrl LOW");
@@ -809,24 +870,73 @@ void swcontrl () {
   }
 }
 
-////////////////////////////////////////////////display sw pushed////////////////////////////////////////////
-void sw_number () {
+////////////////////////////////////////////////sw control short////////////////////////////////////////////
+void swcontrol_short_on () {
   //////////1st pair////////////
-  if (shortpress == true) {
+  if (shortpress == true && currentMillis - lastsynccounter >= 60 ) {
+    synccounter = synccounter+1;                  //incrementa el contador de controlsync
+    Serial.print ("synccounter = ");
+    Serial.println (synccounter);
+    
+    if (synccounter == 1){
     digitalWrite (sw1ctrl, HIGH);       //activa la salida
-    Serial.println("sw1ctrl HIGH");
-    lastSw1Ctrl = millis();             //millis control salida
+    Serial.println("sw1ctrl 4066 HIGH primera vez");
+    lastsynccounter = millis();             //millis control salida
+    sw1ctrlstate = true;                //control de la salida
+    Display.showNumberDec(50, false, 2, 0);
+    }
+    if (synccounter >= 5){
+    digitalWrite (sw1ctrl, HIGH);       //activa la salida
+    Serial.println("sw1ctrl 4066 HIGH segunda vez");
+    lastsynccounter = millis();             //millis control salida
     sw1ctrlstate = true;                //control de la salida
     Display.showNumberDec(50, false, 2, 0);
     shortpress = false;
+    synccounter = 0;
+    }
+    if(shortpress1 == true || shortpress2 == true || shortpress3 == true || shortpress4 == true || shortpress5 == true || shortpress6 == true || shortpress7 == true){
+    shortpress = false;
+    synccounter = 0;
+    }
   }
-
   if (shortpress1 == true) {
     Display.showNumberDec(51, false, 2, 0);
     shortpress1 = false;
   }
+  //////////2nd pair////////////
+  if (shortpress2 == true) {
+    Display.showNumberDec(52, false, 2, 0);
+    shortpress2 = false;
+  }
+  if (shortpress3 == true) {
+    Display.showNumberDec(53, false, 2, 0);
+    shortpress3 = false;
+  }
+  //////////3rd pair////////////
+  if (shortpress4 == true) {
+    Display.showNumberDec(54, false, 2, 0);
+    shortpress4 = false;
+  }
+  if (shortpress5 == true) {
+    Display.showNumberDec(55, false, 2, 0);
+    shortpress5 = false;
+  }
+  //////////4th pair////////////
+  if (shortpress6 == true) {
+    Display.showNumberDec(56, false, 2, 0);
+    shortpress6 = false;
+  }
+  if (shortpress7 == true) {
+    Display.showNumberDec(57, false, 2, 0);
+    shortpress7 = false;
+  }
+}
 
-  if (longpressboth == true) {
+//////////////////////////////////////////////sw control long///////////////////////////////////////////
+void swcontrol_long_on(){
+
+/////////1st pair/////////
+if (longpressboth == true) {
     digitalWrite (sw2ctrl, HIGH);         //activa la salida
     Serial.println("sw2ctrl HIGH");
     sw2ctrlstate = true;                  //control de la salida
@@ -846,18 +956,7 @@ void sw_number () {
     Serial.println("longpress1");
     longpress1 = false;
   }
-
-  //////////2nd pair////////////
-  if (shortpress2 == true) {
-    Display.showNumberDec(52, false, 2, 0);
-    shortpress2 = false;
-  }
-
-  if (shortpress3 == true) {
-    Display.showNumberDec(53, false, 2, 0);
-    shortpress3 = false;
-  }
-
+/////////2nd pair/////////
   if (longpressboth2 == true) {
     Display.showNumberDec(82, false, 2, 0);
     Serial.println("longpressboth2");
@@ -873,18 +972,7 @@ void sw_number () {
     Serial.println("longpress3");
     longpress3 = false;
   }
-
-  //////////3rd pair////////////
-  if (shortpress4 == true) {
-    Display.showNumberDec(54, false, 2, 0);
-    shortpress4 = false;
-  }
-
-  if (shortpress5 == true) {
-    Display.showNumberDec(55, false, 2, 0);
-    shortpress5 = false;
-  }
-
+/////////3rd pair/////////
   if (longpressboth3 == true) {
     Display.showNumberDec(83, false, 2, 0);
     Serial.println("longpressboth3");
@@ -900,18 +988,7 @@ void sw_number () {
     Serial.println("longpress5");
     longpress5 = false;
   }
-
-  //////////4th pair////////////
-  if (shortpress6 == true) {
-    Display.showNumberDec(56, false, 2, 0);
-    shortpress6 = false;
-  }
-
-  if (shortpress7 == true) {
-    Display.showNumberDec(57, false, 2, 0);
-    shortpress7 = false;
-  }
-
+/////////4th pair/////////
   if (longpressboth4 == true) {
     Display.showNumberDec(84, false, 2, 0);
     Serial.println("longpressboth4");
@@ -927,6 +1004,9 @@ void sw_number () {
     Serial.println("longpress7");
     longpress7 = false;
   }
+}
+////////////////////////////////////////////////sw alt control//////////////////////////////////////
+void swaltcontrol(){
 
   //////////alt button////////////
   if (shortpress8 == true) {
@@ -935,33 +1015,40 @@ void sw_number () {
   }
 
   if (longpress8 == true) {
+    syncall = !syncall;
     Display.showNumberDec(18, false, 2, 0);
-    Serial.println("longpress8");
+    Serial.println("sync all");
     longpress8 = false;
   }
 }
-
 /////////////////////////////////////////////////sync//////////////////////////////////////////////////////
 void syncfn() {
-  currentMillis = millis();
+
+    if ((syncallflag == true) && (currentMillis - lastsyncallflag >= 50)){
+      syncallflag = false;
+//      Serial.println("syncall flag false");
+    }
+  
+  //currentMillis = millis();
   // read the input on analog pin 7:
   int sensorValue = analogRead(A7);
   // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
   float voltage = sensorValue * (5.0 / 1023.0);
   // print out the value you read:
-  if ((sensorValue >= 50) && (currentMillis - lastsyncread >= intervalButton)) {
+  if ((sensorValue >= 50) && (currentMillis - lastsyncread >= 50)) {
+    syncallflag = true;
+//    Serial.println("syncall flag true");
+    lastsyncallflag == millis();
     digitalWrite(ledpin, HIGH);
     Serial.println(sensorValue);
-//    Display.showNumberDecEx(99, 0b01000000, false, 2, 0);
     lastsyncread = millis();
   }
   else {
     digitalWrite(ledpin, LOW);
-//    Display.showNumberDecEx(9, 0b00000000, false, 1, 3);
   }
 }
 void loop() {
-
+  
   currentMillis = millis();    // store the current time
   readButtonState();           // read the button state
   readButton1State();
@@ -972,9 +1059,16 @@ void loop() {
   readButton6State();
   readButton7State();
   readButton8State();
-  sw_number ();
-  swcontrl ();
   if (sync == true) {
     syncfn ();
   }
+  if (syncall == true){
+//    Serial.println("sync all on");
+    if (syncallflag == true){swcontrol_short_on();}} //si se activa syncall espera a la flag para activar las salidas
+  if (syncall == false){
+//    Serial.println("sync all off");
+    swcontrol_short_on();}        //si se desactiva syncall activa salidas sin esperar
+  swcontrol_long_on();
+  swaltcontrol();
+  swcontrol_off ();
 }
