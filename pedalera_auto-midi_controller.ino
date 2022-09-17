@@ -55,11 +55,6 @@ unsigned long lastSw2Ctrl = 0;
 bool sw1ctrlstate;
 bool sw2ctrlstate;
 
-//menu
-int menustate = 1;
-int buttonselect;
-unsigned long prevbuttonselect = 0;
-int trackcounterselect;
 
 unsigned long currentMillis;          // Variabele to store the number of milleseconds since the Arduino has started
 
@@ -78,7 +73,7 @@ pinMode(A1, INPUT);
 
 }
 
-// Function for reading the button state/////////////////////////////////////////////////////////////////////7
+// Function for reading the button state
 void readButtonState() {
 
   // If the difference in time between the previous reading is larger than intervalButton
@@ -146,7 +141,8 @@ void readButtonState() {
 
 }
 
-// Function for reading the button1 state////////////////////////////////////////////////////////////////////////
+
+// Function for reading the button1 state
 void readButton1State() {
 
   // If the difference in time between the previous reading is larger than intervalButton
@@ -201,17 +197,18 @@ void readButton1State() {
   }
 
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void swcontrl (){
-  if ((currentMillis - lastSw1Ctrl > 3000)&&(sw1ctrlstate == HIGH)){
+  if ((currentMillis - lastSw1Ctrl > 1)&&(sw1ctrlstate == HIGH)){
     digitalWrite (sw1ctrl, LOW);
     Serial.println("sw1ctrl LOW");
     sw1ctrlstate = false;
     lastSw1Ctrl = millis();
   }
- if ((currentMillis - lastSw2Ctrl > 3000)&&(sw2ctrlstate == HIGH)){
-    digitalWrite (sw2ctrl, LOW);
-    Serial.println("sw1ctrl LOW");
+  
+ if ((currentMillis - lastSw2Ctrl > 1)&&(sw2ctrlstate == HIGH)){
+    digitalWrite (sw2ctrl, LOW);    //desactiva la salida
+    Serial.println("sw2ctrl LOW");
     sw2ctrlstate = false;
     lastSw2Ctrl = millis();
   }  
@@ -225,13 +222,13 @@ void swcontrl (){
     Serial.println("A1 high");
   }
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void sw_number (){
   if (shortpress == true){
-    digitalWrite (sw1ctrl, HIGH);
+    digitalWrite (sw1ctrl, HIGH);       //activa la salida
     Serial.println("sw1ctrl HIGH");
-    lastSw1Ctrl = millis();
-    sw1ctrlstate = true;
+    lastSw1Ctrl = millis();             //millis control salida
+    sw1ctrlstate = true;                //control de la salida
   Display.showNumberDec(51, false, 2, 0);
   shortpress = false;
   }
@@ -242,11 +239,11 @@ void sw_number (){
   }
 
   if (longpressboth == true){   
-    digitalWrite (sw2ctrl, HIGH);
+    digitalWrite (sw2ctrl, HIGH);         //activa la salida
     Serial.println("sw2ctrl HIGH"); 
-    sw2ctrlstate = true; 
-    lastSw2Ctrl = millis();
-    menu_1on = !menu_1on;
+    sw2ctrlstate = true;                  //control de la salida
+    lastSw2Ctrl = millis();               //millis control salida
+    sync = !sync;
   Display.showNumberDec(81, false, 2, 0);
   Serial.println("longpressboth");
   longpressboth = false;
@@ -261,7 +258,7 @@ void sw_number (){
   longpress1 = false;}
 
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void syncfn() {
   currentMillis = millis();
   // read the input on analog pin 5:
@@ -278,30 +275,6 @@ else{
   digitalWrite(ledpin, LOW);
 }
 }
-/////////////////////////////menu 1/////////////////////////////////////////////////////////////////////////////
-void menu_sync (){
-  while (menu_1on == true ){
-   currentMillis = millis(); 
-   if(menustate == 1){menu_1(); accion_1();}
-   if(menustate == 2){menu_2(); accion_2();}
-   if(menustate == 3){menu_3(); accion_3();}
-    
-  }
-}
-void menu_1(){
-  if (prevbuttonselect - currentMillis > intervalButton){
-  buttonselect = digitalRead(button1pin);
-   if(buttonselect == HIGH){}
-    Serial.println("seleccionar track"):  
-    Serial.println(trackcounterselect):  
-   
-   prevbuttonselect = millis();
-}
-}
-void accion_1{
-  
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void loop() {
 
   currentMillis = millis();    // store the current time
@@ -311,7 +284,5 @@ void loop() {
   swcontrl ();
   if (sync == true){
   syncfn ();
-  if (menu_1on == true){
-  menu_sync ();
   }
 }
