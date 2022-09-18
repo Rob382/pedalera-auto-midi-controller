@@ -81,12 +81,13 @@ if (longpressboth1 == true) {
 /////////2nd pair/////////
   if (longpressboth2 == true) {
     midi_active = true;
-    Serial.println("activando midi");
+//    Serial.println("activando midi");
     Display.setSegments(letter_N, 1, 0);
     Display.setSegments(letter_N, 1, 1);
     Display.setSegments(letter_I, 1, 2);
     Display.setSegments(letter_D, 1, 3);
     delay(750);
+    midichanneldisplay();
     longpressboth2 = false;
   }
   if (longpress2 == true && longpressboth2 == false) {

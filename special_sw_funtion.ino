@@ -74,18 +74,21 @@ void swaltcontrol(){
     Display.setSegments(letter_N, 1, 0);
     Display.setSegments(letter_A, 1, 1);
     Display.setSegments(letter_L, 1, 2);
-    Display.setSegments(letter_T, 1, 3);
+    Display.setSegments(letter_T, 1, 3);  
     digitalWrite(2, LOW);
     msgsent = true;
-    lastmsgsent = millis();
-    shortpress8 = false;}
+    lastmsgsent = currentMillis;
+    shortpress8 = false;
+    }
     if (alt == 1){
     Display.setSegments(letter_A, 1, 1);
     Display.setSegments(letter_L, 1, 2);
     Display.setSegments(letter_T, 1, 3);
     digitalWrite(2, HIGH);
+    if (midi_active  == false){
     msgsent = true;
-    lastmsgsent = millis();
+    lastmsgsent = currentMillis;
+    }
     shortpress8 = false;} 
   }
 

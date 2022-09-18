@@ -26,6 +26,7 @@ class Button
     byte Bvalue;
     byte Bchannel;
     byte Btoggle;
+    byte midichannel = 1;
 
   private:
     byte _previous;

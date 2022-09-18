@@ -19,6 +19,7 @@ Mux::Mux(byte outpin_, byte numPins_, bool analog_)
 //Button (Pin Number, Command, Note Number, Channel, Debounce Time)
 Button::Button(byte pin, byte command, byte value, byte channel, byte debounce)
 {
+  channel = midichannel;
   _pin = pin;
   pinMode(_pin, INPUT);
   _value = value;

@@ -24,6 +24,8 @@ TM1637Display Display(CLK, DIO);
 //*****************************************midi configs**************************************************
 MIDI_CREATE_DEFAULT_INSTANCE();
 byte midi_active = false;
+byte midichannel = 1;
+byte midichannelchanged = false;
 
 //************************************************************
 //***SET THE NUMBER OF CONTROLS USED**************************
@@ -71,18 +73,18 @@ Pot *POTS[] {};
 //** Command parameter 0=NOTE  1=CC  2=Toggle CC **
 
 //Button BU1(2, 0, 60, 1, 25 );
-Button BU2(3, 2, 102, 1, 25 );
-Button BU3(4, 2, 103, 1, 25 );
-//Button BU4(5, 0, 63, 1, 25 );
+Button BU2(3, 2, 102, midichannel, 25 );      //sw3 azul
+Button BU3(4, 2, 103, midichannel, 25 );      //sw7 amarillo
+//Button BU4(5, 0, 63, midichannel, 25 );
 //Button BU5(6, 0, 64, 1, 25 );
-Button BU6(7, 2, 104, 1, 25 );
-Button BU7(8, 2, 105, 1, 25 );
+Button BU6(7, 2, 104, midichannel, 25 );      //sw6 verde
+Button BU7(8, 2, 105, midichannel, 25 );      //sw5 azul
 //Button BU8(9, 2, 64, 1, 5 );
 //Button BU9(10, 2, 64, 1, 5 );
-Button BU10(11, 2, 106, 1, 25 );
-Button BU16(17, 2, 107, 1, 25 );
-Button BU17(18, 2, 108, 1, 25 );
-Button BU18(19, 2, 109, 1, 25 );
+Button BU10(11, 2, 106, midichannel, 25 );    //sw1 verde
+Button BU16(17, 2, 107, midichannel, 25 );    //sw2 amarillo
+Button BU17(18, 2, 108, midichannel, 25 );    //sw8 azul
+Button BU18(19, 2, 109, midichannel, 25 );    //sw4 verde
 //*******************************************************************
 //Add buttons used to array below like this->  Button *BUTTONS[] {&BU1, &BU2, &BU3, &BU4, &BU5, &BU6, &BU7, &BU8};
 Button *BUTTONS[] {&BU2, &BU3, &BU6, &BU7, &BU10, &BU16, &BU17, &BU18};
@@ -430,8 +432,11 @@ void loop() {
 
   if (midi_active == true){
     currentMillis = millis();
+    if (msgsent == true && currentMillis - lastmsgsent >= 1500){//mantiene mensajes por 2 segundos en pantalla
+    midichanneldisplay();
+    msgsent = false;}
     readButtonALTState();
     swaltcontrol();
-    midifunction();
+    midifunction();    
   }
 }

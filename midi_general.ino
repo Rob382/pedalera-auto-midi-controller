@@ -11,10 +11,9 @@ void updateButtons() {
 
   // Cycle through Button array
   for (int i = 0; i < NUMBER_BUTTONS; i = i + 1) {
-    byte message = BUTTONS[i]->getValue();
-
+    byte message = BUTTONS[i]->getValue();      
     //  Button is pressed
-    if (message == 0) {
+    if (message == 0 && alt == false) {
       switch (BUTTONS[i]->Bcommand) {
         case 0: //Note
           MIDI.sendNoteOn(BUTTONS[i]->Bvalue, 127, BUTTONS[i]->Bchannel);
@@ -33,7 +32,6 @@ void updateButtons() {
           }
           break;
       }
-//      if (alt == true && )
     }
 
     //  Button is not pressed
@@ -47,6 +45,18 @@ void updateButtons() {
           break;
       }
     }
+
+      if (alt == true && message == 0 && i == 0){midichannel = 3; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 1){midichannel = 7; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 2){midichannel = 6; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 3){midichannel = 5; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 4){midichannel = 1; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 5){midichannel = 2; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 6){midichannel = 8; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 7){midichannel = 4; midichannelchanged = true; alt = false;}
+      BUTTONS[i]->Bchannel = midichannel;
+
+      if (midichannelchanged == true){midichanneldisplay();}
   }
 }
 //*******************************************************************
@@ -91,6 +101,13 @@ void updateMuxButtons() {
       }
     }
   }
+}
+//***********************************************************************
+void midichanneldisplay(){
+        Display.setSegments(letter_C, 1, 0);
+        Display.setSegments(letter_X, 1, 1);
+        Display.showNumberDec(midichannel, false, 2, 2);
+        midichannelchanged = false;
 }
 //***********************************************************************
 void updatePots() {
