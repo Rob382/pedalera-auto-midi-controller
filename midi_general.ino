@@ -46,14 +46,14 @@ void updateButtons() {
       }
     }
 
-      if (alt == true && message == 0 && i == 0){midichannel = 1; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 1){midichannel = 2; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 2){midichannel = 3; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 3){midichannel = 4; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 4){midichannel = 5; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 5){midichannel = 6; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 6){midichannel = 7; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 7){midichannel = 8; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 0){midichannel = 1; midichannelchanged = true; alt = false; digitalWrite(2, LOW);}
+      if (alt == true && message == 0 && i == 1){midichannel = 2; midichannelchanged = true; alt = false; digitalWrite(2, LOW);}
+      if (alt == true && message == 0 && i == 2){midichannel = 3; midichannelchanged = true; alt = false; digitalWrite(2, LOW);}
+      if (alt == true && message == 0 && i == 3){midichannel = 4; midichannelchanged = true; alt = false; digitalWrite(2, LOW);}
+      if (alt == true && message == 0 && i == 4){midichannel = 5; midichannelchanged = true; alt = false; digitalWrite(2, LOW);}
+      if (alt == true && message == 0 && i == 5){midichannel = 6; midichannelchanged = true; alt = false; digitalWrite(2, LOW);}
+      if (alt == true && message == 0 && i == 6){midichannel = 7; midichannelchanged = true; alt = false; digitalWrite(2, LOW);}
+      if (alt == true && message == 0 && i == 7){midichannel = 8; midichannelchanged = true; alt = false; digitalWrite(2, LOW);}
       BUTTONS[i]->Bchannel = midichannel;
 
       if (midichannelchanged == true){midichanneldisplay();}

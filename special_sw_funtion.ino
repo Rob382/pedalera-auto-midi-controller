@@ -40,6 +40,7 @@ void syncrec(){
     singlemsg = false;
     displayallowed = false;
     synccounter = 0;
+    trackmessage = true;
     }
 }
 void syncreccancel(){

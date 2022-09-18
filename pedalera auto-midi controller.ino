@@ -303,6 +303,8 @@ byte stop_prev = false;
 byte sum_botton_pessed = false;
 byte displayallowed = false;
 
+byte trackmessage = false;
+
 ////////////////////////////////////////////switches del cd4066/////////////////////////////////////////////
 byte sw1;
 byte sw2;

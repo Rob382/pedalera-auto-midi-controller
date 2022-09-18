@@ -35,16 +35,29 @@ void swcontrol_short_on () {
       syncedundo = false;
     }
 //////////2nd pair////////////
-  if (shortpress2 == true && currentMillis - lastsynccounter >= 60 ) {nextplaysw = true; releaseallsp ();}
-  if (nextplaysw == true){
-   if (alt == false){
-    if (singlemsg == false){
+  if (shortpress2 == true && currentMillis - lastsynccounter >= 60 ) {
+    nextplaysw = true; 
+    if (alt == false)  {
         Display.setSegments(letter_N, 1, 0);
         Display.setSegments(letter_X, 1, 1);
         Display.setSegments(letter_T, 1, 2);
         Display.setSegments(letter_R, 1, 3);
-        singlemsg = true;}
-        
+    }
+    if (alt == true && sync == true)  {
+        Display.setSegments(letter_S, 1, 0);
+        Display.setSegments(letter_S, 1, 1);
+        Display.setSegments(letter_T, 1, 2);
+        Display.setSegments(letter_P, 1, 3);
+    }
+     if (alt == true && sync == false)  {
+        Display.showNumberDec(3, false, 1, 0);
+        Display.setSegments(letter_N, 1, 1);
+        Display.setSegments(letter_X, 1, 2);
+        Display.setSegments(letter_T, 1, 3);
+    }
+    releaseallsp ();}
+  if (nextplaysw == true){
+   if (alt == false){
       if (sync == true && syncall == true){
       if (oneshotaction == false){
       if (ntrackuni < 9){ntrackuni = ntrackuni+1;}
@@ -53,12 +66,6 @@ void swcontrol_short_on () {
         delay(3);
         digitalWrite(sw5ctrl, LOW);
         delay(6);
-        if (displayallowed == true){
-       Display.setSegments(letter_T, 1, 0);
-       Display.setSegments(letter_R, 1, 1);
-       Display.showNumberDec(ntrackdec, false, 1, 2);
-       Display.showNumberDec(ntrackuni, false, 1, 3);
-        }
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
 //       Serial.print("NEXT + REC ");
 //       Serial.print(ntrackdec);
@@ -67,7 +74,16 @@ void swcontrol_short_on () {
 //      Serial.println(clickstocount);
       oneshotaction = true;
       }
-        syncrec();}
+        syncrec();
+        
+        if (trackmessage == true){
+       Display.setSegments(letter_T, 1, 0);
+       Display.setSegments(letter_R, 1, 1);
+       Display.showNumberDec(ntrackdec, false, 1, 2);
+       Display.showNumberDec(ntrackuni, false, 1, 3);
+       trackmessage = false;
+        }
+        }
       
       if (sync == true && syncall == false){
         if (syncallflag == true){
@@ -78,12 +94,6 @@ void swcontrol_short_on () {
         delay(3);
         digitalWrite(sw5ctrl, LOW);
         delay(6);
-        if (displayallowed == true){
-       Display.setSegments(letter_T, 1, 0);
-       Display.setSegments(letter_R, 1, 1);
-       Display.showNumberDec(ntrackdec, false, 1, 2);
-       Display.showNumberDec(ntrackuni, false, 1, 3);
-        }
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
 //       Serial.print("NEXT + REC ");
 //       Serial.print(ntrackdec);
@@ -92,7 +102,16 @@ void swcontrol_short_on () {
 //      Serial.println(clickstocount);
       oneshotaction = true;
       }
-          syncrec();}}
+          syncrec();
+          
+          if (trackmessage == true){
+       Display.setSegments(letter_T, 1, 0);
+       Display.setSegments(letter_R, 1, 1);
+       Display.showNumberDec(ntrackdec, false, 1, 2);
+       Display.showNumberDec(ntrackuni, false, 1, 3);
+       trackmessage = false;
+        }
+          }}
         
       if (sync == false && syncall == false) {
         if (ntrackuni < 9){ntrackuni = ntrackuni+1;}
@@ -173,10 +192,10 @@ void swcontrol_short_on () {
         sw5ctrlstate = true;                  //control de la salida
         lastSw5Ctrl = currentMillis;
         delay(3);
-    Display.setSegments(letter_T, 1, 0);
-    Display.setSegments(letter_R, 1, 1);
-    Display.showNumberDec(ntrackdec, false, 1, 2);
-    Display.showNumberDec(ntrackuni, false, 1, 3);
+//    Display.setSegments(letter_T, 1, 0);
+//    Display.setSegments(letter_R, 1, 1);
+//    Display.showNumberDec(ntrackdec, false, 1, 2);
+//    Display.showNumberDec(ntrackuni, false, 1, 3);
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
 //    Serial.print("3 next ");
 //    Serial.print(ntrackdec);
@@ -195,16 +214,31 @@ void swcontrol_short_on () {
    }
   }
   
-if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw = true;releaseallsp ();}
-   if (prevplaysw == true){
-    if (alt == false){
-      if (singlemsg == false){
+if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {
+  prevplaysw = true;
+   if (alt == false)  {
         Display.setSegments(letter_P, 1, 0);
         Display.setSegments(letter_R, 1, 1);
         Display.setSegments(letter_E, 1, 2);
         Display.setSegments(letter_R, 1, 3);
-        singlemsg = true;}
-        
+    }
+    if (alt == true && sync == true)  {
+        Display.setSegments(letter_S, 1, 0);
+        Display.setSegments(letter_P, 1, 1);
+        Display.setSegments(letter_L, 1, 2);
+        Display.setSegments(letter_A, 1, 3);
+    }
+     if (alt == true && sync == false)  {
+        Display.showNumberDec(3, false, 1, 0);
+        Display.setSegments(letter_P, 1, 1);
+        Display.setSegments(letter_R, 1, 2);
+        Display.setSegments(letter_E, 1, 3);
+    }
+  releaseallsp ();
+  }
+  
+   if (prevplaysw == true){
+    if (alt == false){        
     if (sync == true && syncall == true){
       if (oneshotaction == false){
     if (ntrackuni > 0){ntrackuni = ntrackuni-1;}
@@ -213,12 +247,6 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
       delay(3);
       digitalWrite(sw4ctrl, LOW);
       delay(6);
-      if (displayallowed == true){
-    Display.setSegments(letter_T, 1, 0);
-    Display.setSegments(letter_R, 1, 1);
-    Display.showNumberDec(ntrackdec, false, 1, 2);
-    Display.showNumberDec(ntrackuni, false, 1, 3);
-      }
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
 //    Serial.print("PREV+REC ");
 //    Serial.print(ntrackdec);
@@ -227,7 +255,15 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
 //    Serial.println(clickstocount);
     oneshotaction = true;
     }
-      syncrec();}
+      syncrec();
+      if (trackmessage == true){
+    Display.setSegments(letter_T, 1, 0);
+    Display.setSegments(letter_R, 1, 1);
+    Display.showNumberDec(ntrackdec, false, 1, 2);
+    Display.showNumberDec(ntrackuni, false, 1, 3);
+    trackmessage = false;
+      }
+      }
     
     if (sync == true && syncall == false){
       if (syncallflag == true){
@@ -238,12 +274,6 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
       delay(3);
       digitalWrite(sw4ctrl, LOW);
       delay(6);
-      if (displayallowed == true){
-    Display.setSegments(letter_T, 1, 0);
-    Display.setSegments(letter_R, 1, 1);
-    Display.showNumberDec(ntrackdec, false, 1, 2);
-    Display.showNumberDec(ntrackuni, false, 1, 3);
-      }
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
 //    Serial.print("PREV+REC ");
 //    Serial.print(ntrackdec);
@@ -252,7 +282,15 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
 //    Serial.println(clickstocount);
     oneshotaction = true;
     }
-        syncrec();}}
+        syncrec();
+        if (trackmessage == true){
+    Display.setSegments(letter_T, 1, 0);
+    Display.setSegments(letter_R, 1, 1);
+    Display.showNumberDec(ntrackdec, false, 1, 2);
+    Display.showNumberDec(ntrackuni, false, 1, 3);
+    trackmessage = false;
+      }
+        }}
       
     if (sync == false && syncall == false) {
       if (ntrackuni > 0){ntrackuni = ntrackuni-1;}
@@ -332,10 +370,10 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
       sw4ctrlstate = true;                  //control de la salida
       lastSw4Ctrl = currentMillis;
       delay(3);
-    Display.setSegments(letter_T, 1, 0);
-    Display.setSegments(letter_R, 1, 1);
-    Display.showNumberDec(ntrackdec, false, 1, 2);
-    Display.showNumberDec(ntrackuni, false, 1, 3);
+//    Display.setSegments(letter_T, 1, 0);
+//    Display.setSegments(letter_R, 1, 1);
+//    Display.showNumberDec(ntrackdec, false, 1, 2);
+//    Display.showNumberDec(ntrackuni, false, 1, 3);
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
 //    Serial.print("3 PREV ");
 //    Serial.print(ntrackdec);
@@ -353,16 +391,24 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
     }
   }}
   //////////3rd pair////////////
-  if (shortpress4 == true) {stop_prev = true; releaseallsp ();}
-  if (stop_prev == true){
-    if (alt == false){
-      if (singlemsg == false){
+  if (shortpress4 == true) {
+    stop_prev = true; 
+    if (alt == false)  {
         Display.setSegments(letter_S, 1, 0);
         Display.setSegments(letter_T, 1, 1);
         Display.setSegments(letter_P, 1, 2);
         Display.setSegments(letter_R, 1, 3);
-        singlemsg = true;}
-        
+    }
+    if (alt == true)  {
+        Display.setSegments(letter_P, 1, 0);
+        Display.setSegments(letter_R, 1, 1);
+        Display.setSegments(letter_U, 1, 2);
+        Display.setSegments(letter_N, 1, 3);
+    }
+    releaseallsp ();}
+    
+  if (stop_prev == true){
+    if (alt == false){        
       if (syncall == false){
         if (ntrackuni > 0){ntrackuni = ntrackuni-1;}
         else {ntrackuni = 9;}
@@ -382,7 +428,6 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
 //      Serial.println(clickstocount);
       msgsent = true;
       lastmsgsent = millis();
-      singlemsg = false;
       stop_prev = false;
         releaseallsp ();
       }
@@ -411,14 +456,7 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         releaseallsp ();
       }
     }
-    if (alt == true){
-      if (singlemsg == false){
-        Display.setSegments(letter_P, 1, 0);
-        Display.setSegments(letter_R, 1, 1);
-        Display.setSegments(letter_U, 1, 2);
-        Display.setSegments(letter_N, 1, 3);
-        singlemsg = true;}
-        
+    if (alt == true){        
       if (syncall == false){
         if (ntrackuni > 0){ntrackuni = ntrackuni-1;}
         else {ntrackuni = 9;}
@@ -467,16 +505,24 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
       }
     }
   }
-  if (shortpress5 == true) {stop_next = true;releaseallsp ();}
-  if (stop_next == true){
-    if (alt == false){
-      if (singlemsg == false){
+  if (shortpress5 == true) {
+    stop_next = true;
+    if (alt == false)  {
         Display.setSegments(letter_S, 1, 0);
         Display.setSegments(letter_T, 1, 1);
         Display.setSegments(letter_N, 1, 2);
         Display.setSegments(letter_X, 1, 3);
-        singlemsg = true;}
-        
+    }
+    if (alt == true)  {
+        Display.setSegments(letter_N, 1, 0);
+        Display.setSegments(letter_X, 1, 1);
+        Display.setSegments(letter_U, 1, 2);
+        Display.setSegments(letter_N, 1, 3);
+    }
+    releaseallsp ();}
+    
+  if (stop_next == true){
+    if (alt == false){        
       if (syncall == false){
         if (ntrackuni < 9){ntrackuni = ntrackuni+1;}
           else {ntrackuni = 0;}
@@ -526,12 +572,6 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
       }
     }
     if (alt == true){
-      if (singlemsg == false){
-        Display.setSegments(letter_N, 1, 0);
-        Display.setSegments(letter_X, 1, 1);
-        Display.setSegments(letter_U, 1, 2);
-        Display.setSegments(letter_N, 1, 3);
-        singlemsg = true;}
       if (syncall == false){
         if (ntrackuni < 9){ntrackuni = ntrackuni+1;}
           else {ntrackuni = 0;}
