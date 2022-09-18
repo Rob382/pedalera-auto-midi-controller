@@ -1,3 +1,37 @@
+const uint8_t msg4[] = {
+  SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
+  SEG_D | SEG_E | SEG_F,                          //L
+  SEG_D | SEG_E | SEG_F,                          //L
+};
+const uint8_t msg12[] = {
+  SEG_C | SEG_E | SEG_G,                          //n
+  SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
+  SEG_D | SEG_E | SEG_F,                          //L
+  SEG_D | SEG_E | SEG_F,                          //L
+};
+const uint8_t msg8[] = {
+  SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
+  SEG_D | SEG_E | SEG_F,                          //L
+  SEG_G | SEG_D | SEG_E | SEG_F,                  //t
+};
+/////////////////////////////////////rec messages///////////////////
+  const uint8_t msg13[] = {
+  SEG_E | SEG_G,                                  //r
+  SEG_A | SEG_E | SEG_D | SEG_G | SEG_F,          //E
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+  };
+    const uint8_t msg14[] = {
+  SEG_C | SEG_B | SEG_D | SEG_E | SEG_G,          //d
+  SEG_C | SEG_D | SEG_E | SEG_G,                  //o
+  SEG_C | SEG_E | SEG_G,                          //n
+  SEG_A | SEG_E | SEG_D | SEG_G | SEG_F,          //E
+  };
+    const uint8_t msg15[] = {
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+  SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
+  SEG_C | SEG_E | SEG_G,                          //n
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+  };
 ////////////////////////////////////////////////sync rec function (button 0)/////////////////////////////////////////////
 void syncrec(){
   synccounter = synccounter+1;                  //incrementa el contador de controlsync

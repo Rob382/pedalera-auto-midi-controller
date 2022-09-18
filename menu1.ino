@@ -1,3 +1,16 @@
+//mensajes usados
+const uint8_t blank[] = {SEG_D,};
+const uint8_t msg2[] = {
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+  SEG_D | SEG_E | SEG_F,                          //L
+};
+const uint8_t msg7[] = {
+  SEG_A | SEG_B | SEG_G | SEG_E | SEG_F,          //P
+  SEG_D | SEG_E | SEG_F,                          //L
+  SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
+  SEG_B | SEG_C | SEG_D | SEG_G | SEG_F,          //Y
+};
+
 ////////////////////////////////////////////////menu functions////////////////////////////////////////////
 void menu_1(){
   Display.setSegments(msg, 2, 0);

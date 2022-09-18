@@ -1,3 +1,4 @@
+
 //////////////////////////////////////////////sw control long///////////////////////////////////////////
 void swcontrol_long_on(){
 
@@ -12,6 +13,18 @@ if (longpressboth == true) {
     Serial.println("longpress");
     longpress = false;
   }
+  const uint8_t msg9[] = {
+  SEG_C | SEG_B | SEG_D | SEG_E | SEG_F,          //u
+  SEG_C | SEG_E | SEG_G,                          //n
+  SEG_C | SEG_B | SEG_D | SEG_E | SEG_G,          //d
+  SEG_C | SEG_D | SEG_E | SEG_G,                  //o
+  };
+  const uint8_t msg10[] = {
+  SEG_C | SEG_B | SEG_D | SEG_E | SEG_F,          //u
+  SEG_C | SEG_E | SEG_G,                          //n
+  SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
+  SEG_E | SEG_G,                                  //r
+  };
   if (shortpress1 == true) {
     if (alt == false){
     Display.setSegments(msg9, 4, 0);
@@ -25,6 +38,12 @@ if (longpressboth == true) {
     shortpress1 = false;}
   }
 /////////2nd pair/////////
+const uint8_t msg3[] = {
+  SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
+  SEG_B | SEG_C | SEG_D | SEG_G | SEG_F,          //Y
+  SEG_C | SEG_E | SEG_G,                          //n
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+};
   if (longpressboth2 == true) {
     digitalWrite (sw2ctrl, HIGH);         //activa la salida
     Serial.println("sw2ctrl HIGH");
@@ -48,6 +67,19 @@ if (longpressboth == true) {
     longpress3 = false;
   }
 /////////3rd pair/////////
+const uint8_t msg6[] = {
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+  SEG_D | SEG_E | SEG_F,                          //L
+  SEG_B | SEG_C,                                  //i
+  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+};
+const uint8_t msg5[] = {
+ SEG_A | SEG_D | SEG_E | SEG_F,                  //C
+  SEG_A | SEG_B | SEG_D | SEG_C | SEG_E | SEG_F,  //O
+  SEG_A | SEG_G | SEG_E | SEG_F,                  //F
+  SEG_A | SEG_B | SEG_D | SEG_C | SEG_G | SEG_F,  //g
+};
+
   if (longpressboth3 == true) {
     menu_active = true;
     Serial.println("entrando al menu");
