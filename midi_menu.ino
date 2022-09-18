@@ -190,7 +190,7 @@ void midi_menu_accion_2(){
      Display.setSegments(letter_R, 1, 2);
      Display.setSegments(letter_O, 1, 2);
     }
-    midi_menustate = 1;
+    midi_menustate = 4;
     select = LOW;
     cursor2 = 0;
     lastselect = millis();
@@ -212,4 +212,74 @@ void midi_menu_3(){
 
       mostrararray = LOW;
       lastmostrararray = millis();}
+}
+
+void midi_menu_4(){
+  commandvalue = command[nbutton - 1];
+  
+  Display.setSegments(letter_F, 1, 0);
+  Display.setSegments(letter_U, 1, 1);
+  Display.setSegments(letter_N, 1, 2);
+  Display.setSegments(letter_C, 1, 3);
+  delay(500);
+}
+
+void midi_menu_accion_4(){
+   while (select == LOW){
+        midi_menu_3();
+    
+      if ((currentMillis - lastunimillis > 250)){
+        if (showunidigit == true){
+          if(commandvalue == 0){
+        Display.setSegments(letter_N, 1, 0);
+        Display.setSegments(letter_O, 1, 1);
+        Display.setSegments(letter_T, 1, 2);
+        Display.setSegments(letter_E, 1, 3);
+          }
+          if(commandvalue == 1){
+            Display.clear();
+        Display.setSegments(letter_C, 1, 0);
+        Display.setSegments(letter_C, 1, 1);
+          }
+          if(commandvalue == 2){
+        Display.setSegments(letter_T, 1, 0);
+        Display.setSegments(letter_O, 1, 1);
+        Display.setSegments(letter_G, 1, 2);
+        Display.setSegments(letter_G, 1, 3);
+          }
+        }
+        if (showunidigit == false){
+        Display.setSegments(blank, 1, 0);
+        Display.setSegments(blank, 1, 1);
+        Display.setSegments(blank, 1, 2);
+        Display.setSegments(blank, 1, 3);
+        }
+        showunidigit = !showunidigit;
+        lastunimillis = millis();
+      }
+      arriba = digitalRead(19);
+      if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
+        if (commandvalue < 2){commandvalue = commandvalue+1;}
+        else {commandvalue = 0;}
+        lastarriba = millis();
+      }
+       abajo = digitalRead(18);
+      if ((abajo == HIGH) && (currentMillis - lastarriba > 350)){
+        if (commandvalue > 0){commandvalue = commandvalue-1;}
+        else {commandvalue = 2;}
+        lastarriba = millis();
+      }
+    currentMillis = millis();
+    button8Pin = analogRead(A6);
+    if (button8Pin <= 500){select = LOW;}
+    if (button8Pin > 500){select = HIGH;}
+  }
+  if (select == HIGH && currentMillis - lastselect > 700){
+    command[nbutton - 1] = commandvalue;
+    EEPROM.update((631 + (nbutton - 1)), commandvalue);
+    midi_menustate = 1;
+    lastselect = millis();
+    select = LOW;
+    delay (300);
+  }
 }

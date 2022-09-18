@@ -27,7 +27,7 @@ byte midi_active = false;
 byte midichannel = 1;
 byte midichannelchanged = false;
 byte note[]={EEPROM.read(621), EEPROM.read(622), EEPROM.read(623), EEPROM.read(624), EEPROM.read(625), EEPROM.read(626), EEPROM.read(627), EEPROM.read(628)};
-byte command[]={2, 2, 2, 2, 2, 2, 2, 2};
+byte command[]={EEPROM.read(631), EEPROM.read(632), EEPROM.read(633), EEPROM.read(634), EEPROM.read(635), EEPROM.read(636), EEPROM.read(637), EEPROM.read(638)};
 
 //*********************************************midi menu******************************************************
 byte midi_menustate = 1;
@@ -37,7 +37,7 @@ byte noteC = 0;
 byte noteD = 0;
 byte noteU = 0;
 byte midi_menu_active = false;
-
+byte commandvalue = 0;
 //************************************************************
 //***SET THE NUMBER OF CONTROLS USED**************************
 //************************************************************
@@ -453,6 +453,8 @@ void loop() {
     swaltcontrol();
     midifunction();   
     if (midi_menu_active == true){
+    if(midi_menustate == 4){midi_menu_4(); midi_menu_accion_4();}
+    if(midi_menustate == 3){midi_menu_3();}
     if(midi_menustate == 2){midi_menu_2(); midi_menu_accion_2();}
     if(midi_menustate == 1){midi_menu_1(); midi_menu_accion_1();} 
   }
