@@ -239,12 +239,12 @@ void menu_5(){
   Display.setSegments(letter_O, 1, 1);
   Display.setSegments(letter_A, 1, 2);
   Display.setSegments(letter_D, 1, 3);
-  delay(1500);
+  delay(1000);
   Display.setSegments(letter_P, 1, 0);
   Display.setSegments(letter_R, 1, 1);
   Display.setSegments(letter_E, 1, 2);
   Display.setSegments(letter_S, 1, 3);
-  delay(1500);
+  delay(1000);
 
   Display.setSegments(letter_L, 1, 0);
   Display.setSegments(letter_D, 1, 1);
@@ -353,12 +353,12 @@ void menu_4(){
   Display.setSegments(letter_A, 1, 1);
   Display.setSegments(letter_V, 1, 2);
   Display.setSegments(letter_E, 1, 3);
-  delay(1500);
+  delay(1000);
   Display.setSegments(letter_P, 1, 0);
   Display.setSegments(letter_R, 1, 1);
   Display.setSegments(letter_E, 1, 2);
   Display.setSegments(letter_S, 1, 3);
-  delay(1500);
+  delay(1000);
 
   Display.setSegments(letter_S, 1, 0);
   Display.setSegments(letter_V, 1, 1);
