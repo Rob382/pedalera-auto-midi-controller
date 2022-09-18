@@ -16,6 +16,8 @@ void complemento(){
   swaltcontrol();
   swcontrol_off ();
   if (menu_active == true){
+    if(menustate == 5){menu_5(); select = LOW; accion_5();}
+    if(menustate == 4){menu_4(); select = LOW; accion_4();}
     if(menustate == 3){menu_3();}
     if(menustate == 2){menu_2(); accion_2();}
     if(menustate == 1){menu_1(); accion_1();}

@@ -14,6 +14,7 @@
 
 */
 //7seg display
+#include <EEPROM.h>
 #include <TM1637Display.h>
 #define CLK 6
 #define DIO 5
@@ -201,6 +202,12 @@ unsigned long lastselect = 0;
 unsigned long lastabajo = 0;
 unsigned long lastmostrararray = 0;
 unsigned long lastcursorpin = 0;
+
+byte membankdec = 0;
+byte membankuni = 0;
+byte eeprombank = 0;
+byte presetbank = 0;
+byte indice = 0;
 /////////////////////////////////////////////letras//////////////////////////////////////
 const uint8_t letter_T[] = {SEG_G | SEG_D | SEG_E | SEG_F,};
 const uint8_t letter_R[] = {SEG_E | SEG_G,};
@@ -220,7 +227,7 @@ const uint8_t letter_U[] = {SEG_C | SEG_B | SEG_D | SEG_E | SEG_F,};
 const uint8_t letter_D[] = {SEG_C | SEG_B | SEG_D | SEG_E | SEG_G,};
 const uint8_t letter_E[] = {SEG_A | SEG_E | SEG_D | SEG_G | SEG_F,};
 const uint8_t letter_X[] = {SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,};
-
+const uint8_t letter_V[] = {SEG_C | SEG_D | SEG_E,};
 //     para saber el tiempo que tardan las acciones
 //unsigned long resta1 = 0;
 //unsigned long restaresultado = 0;
