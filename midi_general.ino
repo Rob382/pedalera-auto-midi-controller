@@ -14,20 +14,20 @@ void updateButtons() {
     byte message = BUTTONS[i]->getValue();      
     //  Button is pressed
     if (message == 0 && alt == false) {
-      switch (command[i]) {
+      switch (command[midichannel -1][i]) {
         case 0: //Note
-          MIDI.sendNoteOn(note[i], 127, BUTTONS[i]->Bchannel);
+          MIDI.sendNoteOn(note[midichannel -1][i], 94, BUTTONS[i]->Bchannel);
           break;
         case 1: //CC
-          MIDI.sendControlChange(note[i], 127, BUTTONS[i]->Bchannel);
+          MIDI.sendControlChange(note[midichannel -1][i], 127, BUTTONS[i]->Bchannel);
           break;
         case 2: //Toggle
           if (BUTTONS[i]->Btoggle == 0) {
-            MIDI.sendControlChange(note[i], 127, BUTTONS[i]->Bchannel);
+            MIDI.sendControlChange(note[midichannel -1][i], 127, BUTTONS[i]->Bchannel);
             BUTTONS[i]->Btoggle = 1;
           }
           else if (BUTTONS[i]->Btoggle == 1) {
-            MIDI.sendControlChange(note[i], 0, BUTTONS[i]->Bchannel);
+            MIDI.sendControlChange(note[midichannel -1][i], 0, BUTTONS[i]->Bchannel);
             BUTTONS[i]->Btoggle = 0;
           }
           break;
@@ -36,12 +36,12 @@ void updateButtons() {
 
     //  Button is not pressed
     if (message == 1) {
-      switch (command[i]) {
+      switch (command[midichannel -1][i]) {
         case 0:
-          MIDI.sendNoteOff(note[i], 0, BUTTONS[i]->Bchannel);
+          MIDI.sendNoteOff(note[midichannel -1][i], 0, BUTTONS[i]->Bchannel);
           break;
         case 1:
-          MIDI.sendControlChange(note[i], 0, BUTTONS[i]->Bchannel);
+          MIDI.sendControlChange(note[midichannel -1][i], 0, BUTTONS[i]->Bchannel);
           break;
       }
     }

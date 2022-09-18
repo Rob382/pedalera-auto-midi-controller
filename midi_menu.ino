@@ -62,7 +62,7 @@ void midi_menu_accion_1(){
 }
 void midi_menu_2(){
       Display.clear();
-      byte notevalue = note[nbutton - 1];
+      byte notevalue = note[midichannel -1][nbutton - 1];
           noteC = notevalue/100;
           noteD = (notevalue - (noteC*100))/10;
           noteU = notevalue - (noteC*100 + noteD*10);
@@ -181,8 +181,8 @@ void midi_menu_accion_2(){
   if (select == HIGH && currentMillis - lastselect > 700){
     int suma = ((noteC*100) + (noteD*10) + noteU);
     if(suma <= 255){
-      note[nbutton - 1] = suma;
-      EEPROM.update((621 + (nbutton - 1)), suma);
+      note[midichannel -1][nbutton - 1] = suma;
+      EEPROM.update((621 + (nbutton -1)+((midichannel - 1) * 8)), suma);
     }
     else{
      Display.setSegments(letter_E, 1, 0);
@@ -201,21 +201,21 @@ void midi_menu_3(){
   mostrararray = digitalRead(11);
 
     if (mostrararray == HIGH && currentMillis - lastmostrararray > 500){
-      Serial.print("note [0] = ");Serial.println(note[0]);
-      Serial.print("note [1] = ");Serial.println(note[1]);
-      Serial.print("note [2] = ");Serial.println(note[2]);
-      Serial.print("note [3] = ");Serial.println(note[3]);
-      Serial.print("note [4] = ");Serial.println(note[4]);
-      Serial.print("note [5] = ");Serial.println(note[5]);
-      Serial.print("note [6] = ");Serial.println(note[6]);
-      Serial.print("note [7] = ");Serial.println(note[7]);
+      Serial.print("note [0] = ");Serial.print(command[midichannel-1][0]);Serial.println(note[midichannel-1][0]);
+      Serial.print("note [1] = ");Serial.print(command[midichannel-1][1]);Serial.println(note[midichannel-1][1]);
+      Serial.print("note [2] = ");Serial.print(command[midichannel-1][2]);Serial.println(note[midichannel-1][2]);
+      Serial.print("note [3] = ");Serial.print(command[midichannel-1][3]);Serial.println(note[midichannel-1][3]);
+      Serial.print("note [4] = ");Serial.print(command[midichannel-1][4]);Serial.println(note[midichannel-1][4]);
+      Serial.print("note [5] = ");Serial.print(command[midichannel-1][5]);Serial.println(note[midichannel-1][5]);
+      Serial.print("note [6] = ");Serial.print(command[midichannel-1][6]);Serial.println(note[midichannel-1][6]);
+      Serial.print("note [7] = ");Serial.print(command[midichannel-1][7]);Serial.println(note[midichannel-1][7]);
 
       mostrararray = LOW;
       lastmostrararray = millis();}
 }
 
 void midi_menu_4(){
-  commandvalue = command[nbutton - 1];
+  commandvalue = command[midichannel -1][nbutton - 1];
   
   Display.setSegments(letter_F, 1, 0);
   Display.setSegments(letter_U, 1, 1);
@@ -275,8 +275,8 @@ void midi_menu_accion_4(){
     if (button8Pin > 500){select = HIGH;}
   }
   if (select == HIGH && currentMillis - lastselect > 700){
-    command[nbutton - 1] = commandvalue;
-    EEPROM.update((631 + (nbutton - 1)), commandvalue);
+    command[midichannel -1][nbutton - 1] = commandvalue;
+    EEPROM.update((685 + (nbutton -1)+((midichannel - 1) * 8)), commandvalue);
     midi_menustate = 1;
     lastselect = millis();
     select = LOW;

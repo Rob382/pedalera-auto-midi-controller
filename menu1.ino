@@ -267,10 +267,17 @@ void accion_5(){
       }
       arriba = digitalRead(19);
       if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
+        if(membankdec != 3){
         if (membankuni < 9){membankuni = membankuni+1;}
         else {membankuni = 0;
         membankdec = membankdec+1;
         Display.showNumberDec(membankdec, false, 1, 2);}
+        }
+        else{membankdec = 0; 
+        membankuni = 0;
+        Display.showNumberDec(membankdec, false, 1, 2);
+        Display.showNumberDec(membankuni, false, 1, 3);
+        }
         lastarriba = millis();
       }
        abajo = digitalRead(18);
@@ -381,12 +388,19 @@ void accion_4(){
       }
       arriba = digitalRead(19);
       if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
+        if(membankdec != 3){
         if (membankuni < 9){membankuni = membankuni+1;}
         else {membankuni = 0;
         membankdec = membankdec+1;
         Display.showNumberDec(membankdec, false, 1, 2);}
+        }
+        else{membankdec = 0;
+        membankuni = 0;
+        Display.showNumberDec(membankdec, false, 1, 2);
+        Display.showNumberDec(membankuni, false, 1, 3);
+        }
         lastarriba = millis();
-      }
+        }
        abajo = digitalRead(18);
       if ((abajo == HIGH) && (currentMillis - lastarriba > 350)){
         if (membankuni > 0){membankuni = membankuni-1;}

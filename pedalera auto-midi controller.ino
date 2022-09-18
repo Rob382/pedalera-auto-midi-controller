@@ -26,8 +26,22 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 byte midi_active = false;
 byte midichannel = 1;
 byte midichannelchanged = false;
-byte note[]={EEPROM.read(621), EEPROM.read(622), EEPROM.read(623), EEPROM.read(624), EEPROM.read(625), EEPROM.read(626), EEPROM.read(627), EEPROM.read(628)};
-byte command[]={EEPROM.read(631), EEPROM.read(632), EEPROM.read(633), EEPROM.read(634), EEPROM.read(635), EEPROM.read(636), EEPROM.read(637), EEPROM.read(638)};
+byte note[8][8]={{EEPROM.read(621), EEPROM.read(622), EEPROM.read(623), EEPROM.read(624), EEPROM.read(625), EEPROM.read(626), EEPROM.read(627), EEPROM.read(628)}
+                ,{EEPROM.read(629), EEPROM.read(630), EEPROM.read(631), EEPROM.read(632), EEPROM.read(633), EEPROM.read(634), EEPROM.read(635), EEPROM.read(636)}
+                ,{EEPROM.read(637), EEPROM.read(638), EEPROM.read(639), EEPROM.read(640), EEPROM.read(641), EEPROM.read(642), EEPROM.read(643), EEPROM.read(644)}
+                ,{EEPROM.read(645), EEPROM.read(646), EEPROM.read(647), EEPROM.read(648), EEPROM.read(649), EEPROM.read(650), EEPROM.read(651), EEPROM.read(652)}
+                ,{EEPROM.read(653), EEPROM.read(654), EEPROM.read(655), EEPROM.read(656), EEPROM.read(657), EEPROM.read(658), EEPROM.read(659), EEPROM.read(660)}
+                ,{EEPROM.read(661), EEPROM.read(662), EEPROM.read(663), EEPROM.read(664), EEPROM.read(665), EEPROM.read(666), EEPROM.read(667), EEPROM.read(668)}
+                ,{EEPROM.read(669), EEPROM.read(670), EEPROM.read(671), EEPROM.read(672), EEPROM.read(673), EEPROM.read(674), EEPROM.read(675), EEPROM.read(676)}
+                ,{EEPROM.read(677), EEPROM.read(678), EEPROM.read(679), EEPROM.read(680), EEPROM.read(681), EEPROM.read(682), EEPROM.read(683), EEPROM.read(684)}};
+byte command[8][8]={{EEPROM.read(685), EEPROM.read(686), EEPROM.read(687), EEPROM.read(688), EEPROM.read(689), EEPROM.read(690), EEPROM.read(691), EEPROM.read(692)}
+                ,{EEPROM.read(693), EEPROM.read(694), EEPROM.read(695), EEPROM.read(696), EEPROM.read(697), EEPROM.read(698), EEPROM.read(699), EEPROM.read(700)}
+                ,{EEPROM.read(701), EEPROM.read(702), EEPROM.read(703), EEPROM.read(704), EEPROM.read(705), EEPROM.read(706), EEPROM.read(707), EEPROM.read(708)}
+                ,{EEPROM.read(709), EEPROM.read(710), EEPROM.read(711), EEPROM.read(712), EEPROM.read(713), EEPROM.read(714), EEPROM.read(715), EEPROM.read(716)}
+                ,{EEPROM.read(717), EEPROM.read(718), EEPROM.read(719), EEPROM.read(720), EEPROM.read(721), EEPROM.read(722), EEPROM.read(723), EEPROM.read(724)}
+                ,{EEPROM.read(725), EEPROM.read(726), EEPROM.read(727), EEPROM.read(728), EEPROM.read(729), EEPROM.read(730), EEPROM.read(731), EEPROM.read(732)}
+                ,{EEPROM.read(733), EEPROM.read(734), EEPROM.read(735), EEPROM.read(736), EEPROM.read(737), EEPROM.read(738), EEPROM.read(739), EEPROM.read(740)}
+                ,{EEPROM.read(741), EEPROM.read(742), EEPROM.read(743), EEPROM.read(744), EEPROM.read(745), EEPROM.read(746), EEPROM.read(747), EEPROM.read(748)}};
 
 //*********************************************midi menu******************************************************
 byte midi_menustate = 1;
