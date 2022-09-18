@@ -10,7 +10,7 @@ if (longpressboth1 == true) {
         Display.setSegments(letter_C, 1, 3);
         msgsent = true;
         lastmsgsent = millis();
-        digitalWrite  (ledpin, LOW);
+        digitalWrite(ledpin, LOW);
 //    Serial.println("longpressboth1 toogle sync");
     longpressboth1 = false;
   }
@@ -118,40 +118,15 @@ if (longpressboth1 == true) {
     longpressboth3 = false;
   }
   if (longpress4 == true && longpressboth3 == false) {
-    if (tripleflag_start == true){
-    tripleflag_action = 1;                                //bandera de accion para función stop+next/prev+reccounter (2/3)
-//    Serial.println("longpress4"); 
+    Display.showNumberDec(14, false, 2, 0);
+//    Serial.println("longpress4");
+    longpress4 = false;
   }
-  Display.showNumberDec(14, false, 2, 0);
-  longpress4 = false;
-  }  
   if (longpress5 == true && longpressboth3 == false) {
-    if (tripleflag_start == true){
-        tripleflag_action = 2;                                //bandera de accion para función stop+next/prev+reccounter (2/3)
-      }   
-        Display.showNumberDec(15, false, 2, 0);
-    //    Serial.println("longpress5");
-        longpress5 = false;
-      }
-if (tripleflag_action == 1){                              //funciones de accion tripleflag
-      if (tripleflag_stop == true){                       //
-        prevplaysw = true;
-        tripleflag_stop = false; 
-        tripleflag_action = 0;
-        syncallflag = true;
-        swcontrol_short_on();   
-      }
-    }
-if (tripleflag_action == 2){                              //funciones de accion tripleflag
-      if (tripleflag_stop == true){                       //
-        nextplaysw = true;
-        tripleflag_stop = false; 
-        tripleflag_action = 0;
-        syncallflag = true;
-        swcontrol_short_on();
-      }
-    }
-  
+    Display.showNumberDec(15, false, 2, 0);
+//    Serial.println("longpress5");
+    longpress5 = false;
+  }
 /////////4th pair/////////
   if (longpressboth4 == true) {
     Display.showNumberDec(84, false, 2, 0);

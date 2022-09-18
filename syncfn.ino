@@ -15,7 +15,7 @@ void syncfn() {
 //    Serial.println("syncall flag true");
     lastsyncallflag == millis();
     digitalWrite(ledpin, HIGH);
-//    Serial.println(sensorValue);
+    Serial.println(sensorValue);
     lastsyncread = millis();
     lastledsyncread = millis();
   }
