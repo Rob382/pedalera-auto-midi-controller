@@ -1,17 +1,21 @@
 ////////////////////////////////////////////////sync rec function (button 0)/////////////////////////////////////////////
 void syncrec(){
   synccounter = synccounter+1;                  //incrementa el contador de controlsync
-    Serial.print ("synccounter = ");
-    Serial.println (synccounter);
+//    Serial.print ("synccounter = ");
+//    Serial.println (synccounter);
+    if (displayallowed == true){
     Display.showNumberDec(synccounter, false, 2, 2);
+    }
     
     if (synccounter == 1){
     digitalWrite (sw1ctrl, HIGH);       //activa la salida
     delay(3);
     sw1ctrlstate = true;                //control de la salida
     lastSw1Ctrl = currentMillis;
-    Serial.println("sw1ctrl 4066 HIGH primera vez");
+    displayallowed = true;
+//    Serial.println("sw1ctrl 4066 HIGH primera vez");
     lastsynccounter = millis();             //millis control salida
+    Display.clear();
     Display.setSegments(letter_R, 1, 0);
     Display.setSegments(letter_E, 1, 1);
     Display.setSegments(letter_C, 1, 2);
@@ -21,7 +25,7 @@ void syncrec(){
     delay(3);
     sw1ctrlstate = true;                //control de la salida
     lastSw1Ctrl = currentMillis;
-    Serial.println("sw1ctrl 4066 HIGH segunda vez");
+//    Serial.println("sw1ctrl 4066 HIGH segunda vez");
     lastsynccounter = millis();             //millis control salida
     Display.setSegments(letter_D, 1, 0);
     Display.setSegments(letter_O, 1, 1);
@@ -34,6 +38,7 @@ void syncrec(){
     prevplaysw = false;
     oneshotaction = false;
     singlemsg = false;
+    displayallowed = false;
     synccounter = 0;
     }
 }
@@ -50,9 +55,10 @@ void syncreccancel(){
     nextplaysw = false;
     oneshotaction = false;
     singlemsg = false;
-    Serial.println("operación cancelada");
-    Serial.print("sync counter = ");
-    Serial.println(synccounter);
+    displayallowed = false;
+//    Serial.println("operación cancelada");
+//    Serial.print("sync counter = ");
+//    Serial.println(synccounter);
     return;
 }
 ////////////////////////////////////////////////sw alt control//////////////////////////////////////
@@ -61,8 +67,8 @@ void swaltcontrol(){
   //////////alt button////////////
   if (shortpress8 == true) {
     alt = !alt;
-    Serial.print("alt toogled ");
-    Serial.println(alt);
+//    Serial.print("alt toogled ");
+//    Serial.println(alt);
     Display.clear();
     if (alt == 0){
     Display.setSegments(letter_N, 1, 0);
@@ -99,7 +105,7 @@ void swaltcontrol(){
     digitalWrite(12, LOW);}
     msgsent = true;
     lastmsgsent = millis();
-    Serial.println("sync all");
+//    Serial.println("sync all");
     longpress8 = false;
   }
 }

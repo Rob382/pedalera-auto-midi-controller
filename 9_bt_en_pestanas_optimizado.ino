@@ -152,6 +152,7 @@ byte stop_next = false;
 byte stop_prev = false;
 
 byte sum_botton_pessed = false;
+byte displayallowed = false;
 
 ////////////////////////////////////////////switches del cd4066/////////////////////////////////////////////
 byte sw1;
@@ -220,6 +221,16 @@ const uint8_t letter_D[] = {SEG_C | SEG_B | SEG_D | SEG_E | SEG_G,};
 const uint8_t letter_E[] = {SEG_A | SEG_E | SEG_D | SEG_G | SEG_F,};
 const uint8_t letter_X[] = {SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,};
 
+//     para saber el tiempo que tardan las acciones
+//unsigned long resta1 = 0;
+//unsigned long restaresultado = 0;
+//unsigned long resta2 = 0;
+
+//resta1 = millis();
+//        resta2 = millis();
+//        restaresultado = resta2 - resta1;
+//        Serial.print("resta resultado = ");
+//        Serial.println(restaresultado);
 void setup() {
   Serial.begin(9600);                 // Initialise the serial monitor
 
@@ -231,7 +242,7 @@ void setup() {
   pinMode(15, OUTPUT);
   pinMode(16, OUTPUT);
   
-  Serial.println("Press button");
+//  Serial.println("Press button");
 
   Display.setBrightness(5);
     inicio ();

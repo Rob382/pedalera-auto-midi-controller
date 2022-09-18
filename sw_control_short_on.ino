@@ -12,7 +12,7 @@ void swcontrol_short_on () {
       
     if (sync == false && syncall == false) {
       //falta agregar la función stop+play(rec) unsynced
-      Serial.println("no hay función programada aún");
+//      Serial.println("no hay función programada aún");
       Display.showNumberDec(50, false, 2, 0);
       shortpress0 = false;
       synced_rec = false;
@@ -22,7 +22,7 @@ void swcontrol_short_on () {
      if (syncedundo == true && syncallflag == true){ 
     digitalWrite (sw3ctrl, HIGH);       //activa el switch undo
     delay(3);
-    Serial.println("sw3ctrl undo switch cd4066 ");
+//    Serial.println("sw3ctrl undo switch cd4066 ");
     sw3ctrlstate = true;                  //control state del switch undo
     lastSw3Ctrl = currentMillis; 
       Display.setSegments(letter_S, 1, 0);
@@ -31,7 +31,7 @@ void swcontrol_short_on () {
       Display.setSegments(letter_N, 1, 3);
       msgsent = true;
       lastmsgsent = millis();
-      Serial.println("longpress01 synced undo");
+//      Serial.println("longpress01 synced undo");
       syncedundo = false;
     }
 //////////2nd pair////////////
@@ -53,16 +53,18 @@ void swcontrol_short_on () {
         delay(3);
         digitalWrite(sw5ctrl, LOW);
         delay(6);
+        if (displayallowed == true){
        Display.setSegments(letter_T, 1, 0);
        Display.setSegments(letter_R, 1, 1);
        Display.showNumberDec(ntrackdec, false, 1, 2);
        Display.showNumberDec(ntrackuni, false, 1, 3);
+        }
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("NEXT + REC ");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("NEXT + REC ");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       oneshotaction = true;
       }
         syncrec();}
@@ -76,16 +78,18 @@ void swcontrol_short_on () {
         delay(3);
         digitalWrite(sw5ctrl, LOW);
         delay(6);
+        if (displayallowed == true){
        Display.setSegments(letter_T, 1, 0);
        Display.setSegments(letter_R, 1, 1);
        Display.showNumberDec(ntrackdec, false, 1, 2);
        Display.showNumberDec(ntrackuni, false, 1, 3);
+        }
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("NEXT + REC ");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("NEXT + REC ");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       oneshotaction = true;
       }
           syncrec();}}
@@ -96,14 +100,14 @@ void swcontrol_short_on () {
         digitalWrite(sw5ctrl, HIGH);
         delay(3);
         digitalWrite(sw5ctrl, LOW);
-        delay(20);
+        delay(6);
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("NEXT + REC ");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
+//       Serial.print("NEXT + REC ");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
         digitalWrite (sw1ctrl, HIGH);       //activa la salida
         delay(3);
-        Serial.println("sw1ctrl 4066 HIGH unica vez");
+//        Serial.println("sw1ctrl 4066 HIGH unica vez");
         sw1ctrlstate = true;                  //control de la salida
         lastSw1Ctrl = currentMillis;
             Display.clear();
@@ -123,7 +127,7 @@ void swcontrol_short_on () {
       if (sync == true && syncall == true){
         digitalWrite (sw2ctrl, HIGH);         //activa la salida2 (stop)
         delay(3);
-        Serial.println("synced stop");
+//        Serial.println("synced stop");
         sw2ctrlstate = true;                  //control2 de la salida (stop)
         lastSw2Ctrl = currentMillis;
         Display.setSegments(letter_S, 1, 0);
@@ -138,7 +142,7 @@ void swcontrol_short_on () {
         if (syncallflag == true){
           digitalWrite (sw2ctrl, HIGH);         //activa la salida2 (stop)
           delay(3);
-        Serial.println("synced stop");
+//        Serial.println("synced stop");
         sw2ctrlstate = true;                  //control2 de la salida (stop)
         lastSw2Ctrl = currentMillis;
           Display.setSegments(letter_S, 1, 0);
@@ -174,11 +178,11 @@ void swcontrol_short_on () {
     Display.showNumberDec(ntrackdec, false, 1, 2);
     Display.showNumberDec(ntrackuni, false, 1, 3);
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-    Serial.print("3 next ");
-    Serial.print(ntrackdec);
-    Serial.println(ntrackuni);
-    Serial.print("clicks to be counted = ");
-    Serial.println(clickstocount);
+//    Serial.print("3 next ");
+//    Serial.print(ntrackdec);
+//    Serial.println(ntrackuni);
+//    Serial.print("clicks to be counted = ");
+//    Serial.println(clickstocount);
     Display.showNumberDec(3, false, 1, 0);
     Display.setSegments(letter_N, 1, 1);
     Display.setSegments(letter_X, 1, 2);
@@ -209,16 +213,18 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
       delay(3);
       digitalWrite(sw4ctrl, LOW);
       delay(6);
+      if (displayallowed == true){
     Display.setSegments(letter_T, 1, 0);
     Display.setSegments(letter_R, 1, 1);
     Display.showNumberDec(ntrackdec, false, 1, 2);
     Display.showNumberDec(ntrackuni, false, 1, 3);
+      }
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-    Serial.print("PREV+REC ");
-    Serial.print(ntrackdec);
-    Serial.println(ntrackuni);
-    Serial.print("clicks to be counted = ");
-    Serial.println(clickstocount);
+//    Serial.print("PREV+REC ");
+//    Serial.print(ntrackdec);
+//    Serial.println(ntrackuni);
+//    Serial.print("clicks to be counted = ");
+//    Serial.println(clickstocount);
     oneshotaction = true;
     }
       syncrec();}
@@ -232,16 +238,18 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
       delay(3);
       digitalWrite(sw4ctrl, LOW);
       delay(6);
+      if (displayallowed == true){
     Display.setSegments(letter_T, 1, 0);
     Display.setSegments(letter_R, 1, 1);
     Display.showNumberDec(ntrackdec, false, 1, 2);
     Display.showNumberDec(ntrackuni, false, 1, 3);
+      }
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-    Serial.print("PREV+REC ");
-    Serial.print(ntrackdec);
-    Serial.println(ntrackuni);
-    Serial.print("clicks to be counted = ");
-    Serial.println(clickstocount);
+//    Serial.print("PREV+REC ");
+//    Serial.print(ntrackdec);
+//    Serial.println(ntrackuni);
+//    Serial.print("clicks to be counted = ");
+//    Serial.println(clickstocount);
     oneshotaction = true;
     }
         syncrec();}}
@@ -252,14 +260,14 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
       digitalWrite(sw4ctrl, HIGH);
       delay(3);
       digitalWrite(sw4ctrl, LOW);
-      delay(20);
+      delay(6);
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-    Serial.print("PREV+REC ");
-    Serial.print(ntrackdec);
-    Serial.println(ntrackuni);
+//    Serial.print("PREV+REC ");
+//    Serial.print(ntrackdec);
+//    Serial.println(ntrackuni);
       digitalWrite (sw1ctrl, HIGH);       //activa la salida
       delay(3);
-      Serial.println("sw1ctrl HIGH unica vez");
+//      Serial.println("sw1ctrl HIGH unica vez");
       sw1ctrlstate = true;                  //control de la salida
       lastSw1Ctrl = currentMillis;
         Display.setSegments(letter_P, 1, 0);
@@ -278,7 +286,7 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
       if (sync == true && syncall == true){
         digitalWrite (sw1ctrl, HIGH);         //activa la salida
         delay(3);
-        Serial.println("synced play");
+//        Serial.println("synced play");
         sw1ctrlstate = true;                  //control de la salida
         lastSw1Ctrl = currentMillis;
           Display.setSegments(letter_S, 1, 0);
@@ -293,7 +301,7 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         if (syncallflag == true){
           digitalWrite (sw1ctrl, HIGH);         //activa la salida
           delay(3);
-          Serial.println("synced play");
+//          Serial.println("synced play");
           sw1ctrlstate = true;                  //control de la salida
           lastSw1Ctrl = currentMillis;
             Display.setSegments(letter_S, 1, 0);
@@ -329,11 +337,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
     Display.showNumberDec(ntrackdec, false, 1, 2);
     Display.showNumberDec(ntrackuni, false, 1, 3);
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-    Serial.print("3 PREV ");
-    Serial.print(ntrackdec);
-    Serial.println(ntrackuni);
-    Serial.print("clicks to be counted = ");
-    Serial.println(clickstocount);
+//    Serial.print("3 PREV ");
+//    Serial.print(ntrackdec);
+//    Serial.println(ntrackuni);
+//    Serial.print("clicks to be counted = ");
+//    Serial.println(clickstocount);
     Display.showNumberDec(3, false, 1, 0);
     Display.setSegments(letter_P, 1, 1);
     Display.setSegments(letter_R, 1, 2);
@@ -367,11 +375,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         lastSw4Ctrl = currentMillis;
         delay(3);
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("stop + prev NO synced all");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("stop + prev NO synced all");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       msgsent = true;
       lastmsgsent = millis();
       singlemsg = false;
@@ -391,11 +399,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         lastSw4Ctrl = currentMillis;
         delay(3);
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("stop + prev synced all");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("stop + prev synced all");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       msgsent = true;
       lastmsgsent = millis();
       singlemsg = false;
@@ -423,11 +431,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         lastSw3Ctrl = currentMillis;
         delay(3);
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("prev + undo unsynced");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("prev + undo unsynced");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       msgsent = true;
       lastmsgsent = millis();
       singlemsg = false;
@@ -446,11 +454,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         lastSw3Ctrl = currentMillis;
         delay(3);
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("prev + undo synced all");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("prev + undo synced all");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       msgsent = true;
       lastmsgsent = millis();
       singlemsg = false;
@@ -481,11 +489,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         lastSw5Ctrl = currentMillis;
         delay(3);
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("stop + next NO synced all");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("stop + next NO synced all");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       msgsent = true;
       lastmsgsent = millis();
       singlemsg = false;
@@ -505,11 +513,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         lastSw5Ctrl = currentMillis;
         delay(3);
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("stop + next synced all");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("stop + next synced all");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       msgsent = true;
       lastmsgsent = millis();
       singlemsg = false;
@@ -536,11 +544,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         lastSw3Ctrl = currentMillis;
         delay(3);
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("next + undo unsynced");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("next + undo unsynced");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       msgsent = true;
       lastmsgsent = millis();
       singlemsg = false;
@@ -559,11 +567,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         lastSw3Ctrl = currentMillis;
         delay(3);
        clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-       Serial.print("next + undo synced all");
-       Serial.print(ntrackdec);
-      Serial.println(ntrackuni);
-       Serial.print("clicks to be counted = ");
-      Serial.println(clickstocount);
+//       Serial.print("next + undo synced all");
+//       Serial.print(ntrackdec);
+//      Serial.println(ntrackuni);
+//       Serial.print("clicks to be counted = ");
+//      Serial.println(clickstocount);
       msgsent = true;
       lastmsgsent = millis();
       singlemsg = false;
@@ -579,7 +587,7 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         else {ntrackuni = 9;}
     digitalWrite (sw4ctrl, HIGH);       //activa el switch undo
     delay(3);
-    Serial.println("sw4ctrl abajo switch cd4066 ");
+//    Serial.println("sw4ctrl abajo switch cd4066 ");
     sw4ctrlstate = true;                  //control state del switch undo
     lastSw4Ctrl = currentMillis;               //inicia el conteo de tiempo de activación
     Display.setSegments(letter_T, 1, 0);
@@ -587,11 +595,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
     Display.showNumberDec(ntrackdec, false, 1, 2);
     Display.showNumberDec(ntrackuni, false, 1, 3);
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-    Serial.print("track abajo ");
-    Serial.print(ntrackdec);
-    Serial.println(ntrackuni);
-    Serial.print("clicks to be counted = ");
-    Serial.println(clickstocount);
+//    Serial.print("track abajo ");
+//    Serial.print(ntrackdec);
+//    Serial.println(ntrackuni);
+//    Serial.print("clicks to be counted = ");
+//    Serial.println(clickstocount);
     shortpress6 = false;
     releaseallsp ();
   }
@@ -606,7 +614,7 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
     delay(6);
     digitalWrite (sw4ctrl, HIGH);       //activa el switch undo
     delay(3);
-    Serial.println("sw4ctrl abajo switch cd4066 ");
+//    Serial.println("sw4ctrl abajo switch cd4066 ");
     sw4ctrlstate = true;                  //control state del switch undo
     lastSw4Ctrl = currentMillis;               //inicia el conteo de tiempo de activación
     Display.setSegments(letter_T, 1, 0);
@@ -614,11 +622,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
     Display.showNumberDec(ntrackdec, false, 1, 2);
     Display.showNumberDec(ntrackuni, false, 1, 3);
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-    Serial.print("track abajo ");
-    Serial.print(ntrackdec);
-    Serial.println(ntrackuni);
-    Serial.print("clicks to be counted = ");
-    Serial.println(clickstocount);
+//    Serial.print("track abajo ");
+//    Serial.print(ntrackdec);
+//    Serial.println(ntrackuni);
+//    Serial.print("clicks to be counted = ");
+//    Serial.println(clickstocount);
     Display.showNumberDec(2, false, 1, 0);
     Display.setSegments(letter_P, 1, 1);
     Display.setSegments(letter_R, 1, 2);
@@ -636,7 +644,7 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
         else {ntrackuni = 0;}
     digitalWrite (sw5ctrl, HIGH);       //activa el switch undo
     delay(3);
-    Serial.println("sw5ctrl arriba switch cd4066 ");
+//    Serial.println("sw5ctrl arriba switch cd4066 ");
     sw5ctrlstate = true;                  //control state del switch undo
     lastSw5Ctrl = currentMillis;               //inicia el conteo de tiempo de activación
      Display.setSegments(letter_T, 1, 0);
@@ -644,11 +652,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
      Display.showNumberDec(ntrackdec, false, 1, 2);
      Display.showNumberDec(ntrackuni, false, 1, 3);
      clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-     Serial.print("track arriba ");
-     Serial.print(ntrackdec);
-    Serial.println(ntrackuni);
-     Serial.print("clicks to be counted = ");
-    Serial.println(clickstocount);
+//     Serial.print("track arriba ");
+//     Serial.print(ntrackdec);
+//    Serial.println(ntrackuni);
+//     Serial.print("clicks to be counted = ");
+//    Serial.println(clickstocount);
     shortpress7 = false;
     releaseallsp ();
     }
@@ -663,7 +671,7 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
     delay(6);
     digitalWrite (sw5ctrl, HIGH);
     delay(3);
-    Serial.println("sw5ctrl arriba switch cd4066 ");
+//    Serial.println("sw5ctrl arriba switch cd4066 ");
     sw5ctrlstate = true;                  //control state del switch undo
     lastSw5Ctrl = currentMillis;               //inicia el conteo de tiempo de activación
      Display.setSegments(letter_T, 1, 0);
@@ -671,11 +679,11 @@ if (shortpress3 == true && currentMillis - lastsynccounter >= 60 ) {prevplaysw =
      Display.showNumberDec(ntrackdec, false, 1, 2);
      Display.showNumberDec(ntrackuni, false, 1, 3);
      clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
-     Serial.print("track arriba ");
-     Serial.print(ntrackdec);
-    Serial.println(ntrackuni);
-     Serial.print("clicks to be counted = ");
-    Serial.println(clickstocount);
+//     Serial.print("track arriba ");
+//     Serial.print(ntrackdec);
+//    Serial.println(ntrackuni);
+//     Serial.print("clicks to be counted = ");
+//    Serial.println(clickstocount);
     Display.showNumberDec(2, false, 1, 0);
     Display.setSegments(letter_N, 1, 1);
     Display.setSegments(letter_X, 1, 2);

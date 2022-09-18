@@ -4,9 +4,9 @@ void first_read(){
    if (buttonState == HIGH && buttonStatePrevious == LOW && !buttonStateLongPress && out_release_flag == true) {
       buttonLongPressMillis = currentMillis;
       buttonStatePrevious = HIGH;
-      Serial.print("Button ");
-      Serial.print(buttonPin);
-      Serial.println(" pressed");
+//      Serial.print("Button ");
+//      Serial.print(buttonPin);
+//      Serial.println(" pressed");
       msgsent = false;                    //cancela el mensaje enviado
       out_release_flag = false;
       if (buttonPin == 4){button0pressed = true;}
@@ -19,9 +19,9 @@ void first_read(){
  if (button1State == HIGH && button1StatePrevious == LOW && !button1StateLongPress && out_release_flag1 == true) {
       button1LongPressMillis = currentMillis;
       button1StatePrevious = HIGH;
-      Serial.print("Button ");
-      Serial.print(button1Pin);
-      Serial.println(" pressed");
+//      Serial.print("Button ");
+//      Serial.print(button1Pin);
+//      Serial.println(" pressed");
       msgsent = false;                    //cancela el mensaje enviado
       out_release_flag1 = false;
       if (button1Pin == 3){button1pressed = true;}
@@ -48,9 +48,9 @@ while (buttonStatePrevious == HIGH || button1StatePrevious == HIGH){
     if (buttonState == HIGH && buttonStatePrevious == LOW && !buttonStateLongPress) {
       buttonLongPressMillis = currentMillis;
       buttonStatePrevious = HIGH;
-      Serial.print("Button ");
-      Serial.print(buttonPin);
-      Serial.println(" pressed inside");
+//      Serial.print("Button ");
+//      Serial.print(buttonPin);
+//      Serial.println(" pressed inside");
       msgsent = false;                    //cancela el mensaje enviado
     }
 
@@ -62,11 +62,11 @@ while (buttonStatePrevious == HIGH || button1StatePrevious == HIGH){
       button1StateLongPress = true;
       buttonStateLongPress = true;
       bothchecker = true;
-      Serial.print("both buttons (");
-      Serial.print(buttonPin);
-      Serial.print(" & ");
-      Serial.print(button1Pin);
-      Serial.println(") pressed");
+//      Serial.print("both buttons (");
+//      Serial.print(buttonPin);
+//      Serial.print(" & ");
+//      Serial.print(button1Pin);
+//      Serial.println(") pressed");
       longpressboth = true;
     }
     //.......................................................................................................
@@ -75,9 +75,9 @@ while (buttonStatePrevious == HIGH || button1StatePrevious == HIGH){
     // If the time the button has been pressed is larger or equal to the time needed for a long press
     if (buttonState == HIGH && button1State == LOW && !buttonStateLongPress && ((buttonPressDuration >= minButtonLongPressDuration) )) {
       buttonStateLongPress = true;
-      Serial.print("button ");
-      Serial.print(buttonPin);
-      Serial.println(" long pressed ");
+//      Serial.print("button ");
+//      Serial.print(buttonPin);
+//      Serial.println(" long pressed ");
       longpress = true;
     }
 
@@ -87,9 +87,9 @@ while (buttonStatePrevious == HIGH || button1StatePrevious == HIGH){
       buttonStatePrevious = LOW;
       buttonStateLongPress = false;
       bothchecker = false;
-      Serial.print("button ");
-      Serial.print(buttonPin);
-      Serial.println(" released ");
+//      Serial.print("button ");
+//      Serial.print(buttonPin);
+//      Serial.println(" released ");
       button1StatePrevious = LOW;
       button1StateLongPress = false;
 
@@ -101,9 +101,9 @@ while (buttonStatePrevious == HIGH || button1StatePrevious == HIGH){
       //       and can be removed.
       if (buttonPressDuration < minButtonLongPressDuration) {
         shortpress = true;
-      Serial.print("button ");
-      Serial.print(buttonPin);
-      Serial.println(" pressed shortly");
+//      Serial.print("button ");
+//      Serial.print(buttonPin);
+//      Serial.println(" pressed shortly");
       }
     }
 
@@ -125,9 +125,9 @@ while (buttonStatePrevious == HIGH || button1StatePrevious == HIGH){
     if (button1State == HIGH && button1StatePrevious == LOW && !button1StateLongPress) {
       button1LongPressMillis = currentMillis;
       button1StatePrevious = HIGH;
-      Serial.print("Button ");
-      Serial.print(button1Pin);
-      Serial.println(" pressed inside");
+//      Serial.print("Button ");
+//      Serial.print(button1Pin);
+//      Serial.println(" pressed inside");
       msgsent = false;                    //cancela el mensaje enviado
     }
 
@@ -139,9 +139,9 @@ while (buttonStatePrevious == HIGH || button1StatePrevious == HIGH){
     // If the time the button has been pressed is larger or equal to the time needed for a long press
     if (button1State == HIGH && buttonState == LOW && !button1StateLongPress && ((button1PressDuration >= minButtonLongPressDuration) )) {
       button1StateLongPress = true;
-      Serial.print("button ");
-      Serial.print(button1Pin);
-      Serial.println(" long pressed ");
+//      Serial.print("button ");
+//      Serial.print(button1Pin);
+//      Serial.println(" long pressed ");
       longpress1 = true;
     }
 
@@ -150,9 +150,9 @@ while (buttonStatePrevious == HIGH || button1StatePrevious == HIGH){
     if ((button1State == LOW && button1StatePrevious == HIGH)||(longpress1 == true) ) {
       button1StatePrevious = LOW;
       button1StateLongPress = false;
-      Serial.print("button ");
-      Serial.print(button1Pin);
-      Serial.println(" released ");
+//      Serial.print("button ");
+//      Serial.print(button1Pin);
+//      Serial.println(" released ");
 
       // If there is no measurement running to determine how long the button was pressed AND
       // If the time the button has been pressed is smaller than the minimal time needed for a long press
@@ -162,9 +162,9 @@ while (buttonStatePrevious == HIGH || button1StatePrevious == HIGH){
       //       and can be removed.
       if (button1PressDuration < minButtonLongPressDuration) {
         shortpress1 = true;
-        Serial.print("button ");
-      Serial.print(button1Pin);
-      Serial.println(" pressed shortly");
+//        Serial.print("button ");
+//      Serial.print(button1Pin);
+//      Serial.println(" pressed shortly");
       }
     }
 
@@ -194,7 +194,7 @@ void firstpair(){
         shortpress5 = false;
         shortpress6 = false;
         shortpress7 = false;
-        Serial.println("shortpress0");
+//        Serial.println("shortpress0");
   }
   shortpress01 = shortpress1;
   shortpress1 = false;
@@ -207,7 +207,7 @@ void firstpair(){
         shortpress5 = false;
         shortpress6 = false;
         shortpress7 = false;
-        Serial.println("shortpress01");
+//        Serial.println("shortpress01");
   }
   if (synccounter > 1){shortpress01 = false;syncreccancel();}
   }
@@ -239,7 +239,7 @@ longpressboth2 = longpressboth;
         shortpress5 = false;
         shortpress6 = false;
         shortpress7 = false;
-        Serial.println("shortpress2");
+//        Serial.println("shortpress2");
   }
   shortpress3 = shortpress1;
   shortpress1 = false;
@@ -251,7 +251,7 @@ longpressboth2 = longpressboth;
         shortpress5 = false;
         shortpress6 = false;
         shortpress7 = false;
-        Serial.println("shortpress3");
+//        Serial.println("shortpress3");
   }
   sum_botton_pessed = false;
   }
@@ -275,7 +275,7 @@ void thirdpair(){
         shortpress5 = false;
         shortpress6 = false;
         shortpress7 = false;
-        Serial.println("shortpress4");
+//        Serial.println("shortpress4");
   }
   shortpress5 = shortpress1;
   shortpress1 = false;
@@ -287,7 +287,7 @@ void thirdpair(){
         shortpress4 = false;
         shortpress6 = false;
         shortpress7 = false;
-        Serial.println("shortpress5");
+//        Serial.println("shortpress5");
   }
   sum_botton_pessed = false;
   }
@@ -344,7 +344,7 @@ void readButtonALTState() {
     if (button8State == HIGH && button8StatePrevious == LOW && !button8StateLongPress) {
       button8LongPressMillis = currentMillis;
       button8StatePrevious = HIGH;
-      Serial.println("alt Button pressed");
+//      Serial.println("alt Button pressed");
       msgsent = false;                    //cancela el mensaje enviado
     }
 
@@ -356,7 +356,7 @@ void readButtonALTState() {
     // If the time the button has been pressed is larger or equal to the time needed for a long press
     if (button8State == HIGH && !button8StateLongPress && ((button8PressDuration >= minButtonLongPressDuration) )) {
       button8StateLongPress = true;
-      Serial.println("alt Button long pressed");
+//      Serial.println("alt Button long pressed");
       longpress8 = true;
     }
 
@@ -365,7 +365,7 @@ void readButtonALTState() {
     if (button8State == LOW && button8StatePrevious == HIGH) {
       button8StatePrevious = LOW;
       button8StateLongPress = false;
-      Serial.println("alt Button released");
+//      Serial.println("alt Button released");
 
       // If there is no measurement running to determine how long the button was pressed AND
       // If the time the button has been pressed is smaller than the minimal time needed for a long press
@@ -374,7 +374,7 @@ void readButtonALTState() {
       //       since buttonStateLongPress is set to FALSE on line 75, !buttonStateLongPress is always TRUE
       //       and can be removed.
       if (button8PressDuration < minButtonLongPressDuration) {
-        Serial.println("alt Button pressed shortly");
+//        Serial.println("alt Button pressed shortly");
         shortpress8 = true;
       }
     }
@@ -393,48 +393,56 @@ void releasefunction(){
     if (buttoncomp == LOW && button0pressed == true){
       button0pressed = false;
       out_release_flag = true;
-      Serial.print("released buttonpin ");
-      Serial.println(buttonPin);}}
+//      Serial.print("released buttonpin ");
+//      Serial.println(buttonPin);
+      }}
   if (button1Pin == 3){
     if (buttoncomp1 == LOW && button1pressed == true){
       button1pressed = false;
       out_release_flag1 = true;
-      Serial.print("released buttonpin ");
-      Serial.println(button1Pin);}}    
+//      Serial.print("released buttonpin ");
+//      Serial.println(button1Pin);
+      }}    
   if (buttonPin == 7){
     if (buttoncomp == LOW && button2pressed == true){
       button2pressed = false;
       out_release_flag = true;
-      Serial.print("released buttonpin ");
-      Serial.println(buttonPin);}}
+//      Serial.print("released buttonpin ");
+//      Serial.println(buttonPin);
+      }}
   if (button1Pin == 8){
     if (buttoncomp1 == LOW && button3pressed == true){
       button3pressed = false;
       out_release_flag1 = true;
-      Serial.print("released buttonpin ");
-      Serial.println(button1Pin);}}
+//      Serial.print("released buttonpin ");
+//      Serial.println(button1Pin);
+      }}
   if (buttonPin == 11){
     if (buttoncomp == LOW && button4pressed == true){
       button4pressed = false;
       out_release_flag = true;
-      Serial.print("released buttonpin ");
-      Serial.println(buttonPin);}} 
+//      Serial.print("released buttonpin ");
+//      Serial.println(buttonPin);
+      }} 
   if (button1Pin == 17){
     if (buttoncomp1 == LOW && button5pressed == true){
       button5pressed = false;
       out_release_flag1 = true;
-      Serial.print("released buttonpin ");
-      Serial.println(button1Pin);}}     
+//      Serial.print("released buttonpin ");
+//      Serial.println(button1Pin);
+      }}     
   if (buttonPin == 18){
     if (buttoncomp == LOW && button6pressed == true){
       button6pressed = false;
       out_release_flag = true;
-      Serial.print("released buttonpin ");
-      Serial.println(buttonPin);}}
+//      Serial.print("released buttonpin ");
+//      Serial.println(buttonPin);
+      }}
   if (button1Pin == 19){
     if (buttoncomp1 == LOW && button7pressed == true){
       button7pressed = false;
       out_release_flag1 = true;
-      Serial.print("released buttonpin ");
-      Serial.println(button1Pin);}}      
+//      Serial.print("released buttonpin ");
+//      Serial.println(button1Pin);
+      }}      
 }

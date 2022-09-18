@@ -11,12 +11,12 @@ if (longpressboth1 == true) {
         msgsent = true;
         lastmsgsent = millis();
         digitalWrite(ledpin, LOW);
-    Serial.println("longpressboth1 toogle sync");
+//    Serial.println("longpressboth1 toogle sync");
     longpressboth1 = false;
   }
   if (longpress0 == true && longpressboth1 == false) {
     Display.showNumberDec(10, false, 2, 0);
-    Serial.println("longpress0");
+//    Serial.println("longpress0");
     longpress0 = false;
   }
   if (shortpress01 == true) {undo_button = true;releaseallsp ();}
@@ -24,7 +24,7 @@ if (longpressboth1 == true) {
     if (alt == false){
     digitalWrite (sw3ctrl, HIGH);       //activa el switch undo
     delay(3);
-    Serial.println("sw3ctrl undo switch cd4066 ");
+//    Serial.println("sw3ctrl undo switch cd4066 ");
     sw3ctrlstate = true;                  //control state del switch undo
     lastSw3Ctrl = currentMillis;               //inicia el conteo de tiempo de activación
     Display.setSegments(letter_U, 1, 0);
@@ -33,7 +33,7 @@ if (longpressboth1 == true) {
     Display.setSegments(letter_O, 1, 3);
     msgsent = true;
     lastmsgsent = millis();
-    Serial.println("undo");
+//    Serial.println("undo");
     undo_button = false;}
     
     if (alt == true){
@@ -41,7 +41,7 @@ if (longpressboth1 == true) {
         if (oneshotaction == false){
         digitalWrite (sw3ctrl, HIGH);       //activa el switch undo
         delay(3);
-    Serial.println("sw3ctrl undo switch cd4066 ");
+//    Serial.println("sw3ctrl undo switch cd4066 ");
     sw3ctrlstate = true;                  //control state del switch undo
     lastSw3Ctrl = currentMillis;
     Display.setSegments(letter_U, 1, 0);
@@ -52,19 +52,19 @@ if (longpressboth1 == true) {
         if (syncallflag == true){
       digitalWrite (sw1ctrl, HIGH);       //activa el switch de rec
       delay(3);
-    Serial.println("activado el switch rec cd4066");
+//    Serial.println("activado el switch rec cd4066");
     sw1ctrlstate = true;                  //control state del switch rec
     lastSw1Ctrl = currentMillis;
     msgsent = true;
     lastmsgsent = millis();
-    Serial.println("undo synced record");
+//    Serial.println("undo synced record");
     undo_button = false;
     oneshotaction = false;}}
     
     if(sync == false){
       digitalWrite (sw3ctrl, HIGH);       //activa el switch undo
       delay(3);
-    Serial.println("sw3ctrl undo switch cd4066 ");
+//    Serial.println("sw3ctrl undo switch cd4066 ");
     sw3ctrlstate = true;                  //control state del switch undo
     lastSw3Ctrl = currentMillis;
       Display.setSegments(letter_U, 1, 0);
@@ -73,7 +73,7 @@ if (longpressboth1 == true) {
       Display.setSegments(letter_O, 1, 3);
     msgsent = true;
     lastmsgsent = millis();
-    Serial.println("undo");
+//    Serial.println("undo");
     undo_button = false;
     }
     }
@@ -84,18 +84,18 @@ if (longpressboth1 == true) {
   }
   if (longpress2 == true && longpressboth2 == false) {
     Display.showNumberDec(12, false, 2, 0);
-    Serial.println("longpress2");
+//    Serial.println("longpress2");
     longpress2 = false;
   }
   if (longpress3 == true && longpressboth2 == false) {
     Display.showNumberDec(13, false, 2, 0);
-    Serial.println("longpress3");
+//    Serial.println("longpress3");
     longpress3 = false;
   }
 /////////3rd pair/////////
   if (longpressboth3 == true) {
     menu_active = true;
-    Serial.println("entrando al menu");
+//    Serial.println("entrando al menu");
     Display.setSegments(letter_C, 1, 0);
     Display.setSegments(letter_L, 1, 1);
     Display.setSegments(letter_I, 1, 2);
@@ -106,33 +106,33 @@ if (longpressboth1 == true) {
     Display.setSegments(letter_F, 1, 2);
     Display.setSegments(letter_G, 1, 3);
     delay(750);
-    Serial.println("longpressboth3");
+//    Serial.println("longpressboth3");
     longpressboth3 = false;
   }
   if (longpress4 == true && longpressboth3 == false) {
     Display.showNumberDec(14, false, 2, 0);
-    Serial.println("longpress4");
+//    Serial.println("longpress4");
     longpress4 = false;
   }
   if (longpress5 == true && longpressboth3 == false) {
     Display.showNumberDec(15, false, 2, 0);
-    Serial.println("longpress5");
+//    Serial.println("longpress5");
     longpress5 = false;
   }
 /////////4th pair/////////
   if (longpressboth4 == true) {
     Display.showNumberDec(84, false, 2, 0);
-    Serial.println("longpressboth4");
+//    Serial.println("longpressboth4");
     longpressboth4 = false;
   }
   if (longpress6 == true && longpressboth4 == false) {
     Display.showNumberDec(16, false, 2, 0);
-    Serial.println("longpress6");
+//    Serial.println("longpress6");
     longpress6 = false;
   }
   if (longpress7 == true && longpressboth4 == false) {
     Display.showNumberDec(17, false, 2, 0);
-    Serial.println("longpress7");
+//    Serial.println("longpress7");
     longpress7 = false;
   }
 }
