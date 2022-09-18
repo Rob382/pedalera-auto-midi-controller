@@ -303,6 +303,10 @@ byte stop_prev = false;
 byte sum_botton_pessed = false;
 byte displayallowed = false;
 
+byte tripleflag_start = false;                //variables para triple acción en next y prev
+byte tripleflag_action = 0;
+byte tripleflag_stop = false;
+
 ////////////////////////////////////////////switches del cd4066/////////////////////////////////////////////
 byte sw1;
 byte sw2;

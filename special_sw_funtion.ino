@@ -19,20 +19,18 @@ void syncrec(){
     Display.setSegments(letter_R, 1, 0);
     Display.setSegments(letter_E, 1, 1);
     Display.setSegments(letter_C, 1, 2);
+    tripleflag_start = true;                    //bandera de inicio para función stop+next/prev+reccounter (1/3)
     }
     if (synccounter >= clickstocount+1){
     digitalWrite (sw1ctrl, HIGH);       //activa la salida
     delay(3);
+    digitalWrite (sw1ctrl, LOW);
     sw1ctrlstate = true;                //control de la salida
+    tripleflag_stop = true;                    //bandera de final para función stop+next/prev+reccounter (3/3)
+    tripleflag_start = false;                    //bandera de final para función stop+next/prev+reccounter (3/3)
     lastSw1Ctrl = currentMillis;
 //    Serial.println("sw1ctrl 4066 HIGH segunda vez");
     lastsynccounter = millis();             //millis control salida
-    Display.setSegments(letter_D, 1, 0);
-    Display.setSegments(letter_O, 1, 1);
-    Display.setSegments(letter_N, 1, 2);
-    Display.setSegments(letter_E, 1, 3);
-    msgsent = true;
-    lastmsgsent = millis();
     synced_rec = false;
     nextplaysw = false;
     prevplaysw = false;
@@ -40,6 +38,13 @@ void syncrec(){
     singlemsg = false;
     displayallowed = false;
     synccounter = 0;
+    if (tripleflag_action == 0){
+    Display.setSegments(letter_D, 1, 0);
+    Display.setSegments(letter_O, 1, 1);
+    Display.setSegments(letter_N, 1, 2);
+    Display.setSegments(letter_E, 1, 3);
+    msgsent = true;
+    lastmsgsent = millis();}
     }
 }
 void syncreccancel(){
@@ -56,6 +61,9 @@ void syncreccancel(){
     oneshotaction = false;
     singlemsg = false;
     displayallowed = false;
+    tripleflag_start = false;                    //bandera de inicio para función stop+next/prev+reccounter (1/3)
+    tripleflag_action = 0;                    //bandera de inicio para función stop+next/prev+reccounter (1/3)
+    tripleflag_stop = false;                    //bandera de final para función stop+next/prev+reccounter (3/3)
 //    Serial.println("operación cancelada");
 //    Serial.print("sync counter = ");
 //    Serial.println(synccounter);
