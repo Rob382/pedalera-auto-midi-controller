@@ -14,20 +14,20 @@ void updateButtons() {
     byte message = BUTTONS[i]->getValue();      
     //  Button is pressed
     if (message == 0 && alt == false) {
-      switch (BUTTONS[i]->Bcommand) {
+      switch (command[i]) {
         case 0: //Note
-          MIDI.sendNoteOn(BUTTONS[i]->Bvalue, 127, BUTTONS[i]->Bchannel);
+          MIDI.sendNoteOn(note[i], 127, BUTTONS[i]->Bchannel);
           break;
         case 1: //CC
-          MIDI.sendControlChange(BUTTONS[i]->Bvalue, 127, BUTTONS[i]->Bchannel);
+          MIDI.sendControlChange(note[i], 127, BUTTONS[i]->Bchannel);
           break;
         case 2: //Toggle
           if (BUTTONS[i]->Btoggle == 0) {
-            MIDI.sendControlChange(BUTTONS[i]->Bvalue, 127, BUTTONS[i]->Bchannel);
+            MIDI.sendControlChange(note[i], 127, BUTTONS[i]->Bchannel);
             BUTTONS[i]->Btoggle = 1;
           }
           else if (BUTTONS[i]->Btoggle == 1) {
-            MIDI.sendControlChange(BUTTONS[i]->Bvalue, 0, BUTTONS[i]->Bchannel);
+            MIDI.sendControlChange(note[i], 0, BUTTONS[i]->Bchannel);
             BUTTONS[i]->Btoggle = 0;
           }
           break;
@@ -36,24 +36,24 @@ void updateButtons() {
 
     //  Button is not pressed
     if (message == 1) {
-      switch (BUTTONS[i]->Bcommand) {
+      switch (command[i]) {
         case 0:
-          MIDI.sendNoteOff(BUTTONS[i]->Bvalue, 0, BUTTONS[i]->Bchannel);
+          MIDI.sendNoteOff(note[i], 0, BUTTONS[i]->Bchannel);
           break;
         case 1:
-          MIDI.sendControlChange(BUTTONS[i]->Bvalue, 0, BUTTONS[i]->Bchannel);
+          MIDI.sendControlChange(note[i], 0, BUTTONS[i]->Bchannel);
           break;
       }
     }
 
-      if (alt == true && message == 0 && i == 0){midichannel = 3; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 1){midichannel = 7; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 2){midichannel = 6; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 3){midichannel = 5; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 4){midichannel = 1; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 5){midichannel = 2; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 6){midichannel = 8; midichannelchanged = true; alt = false;}
-      if (alt == true && message == 0 && i == 7){midichannel = 4; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 0){midichannel = 1; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 1){midichannel = 2; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 2){midichannel = 3; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 3){midichannel = 4; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 4){midichannel = 5; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 5){midichannel = 6; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 6){midichannel = 7; midichannelchanged = true; alt = false;}
+      if (alt == true && message == 0 && i == 7){midichannel = 8; midichannelchanged = true; alt = false;}
       BUTTONS[i]->Bchannel = midichannel;
 
       if (midichannelchanged == true){midichanneldisplay();}

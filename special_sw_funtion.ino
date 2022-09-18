@@ -93,6 +93,7 @@ void swaltcontrol(){
   }
 
   if (longpress8 == true) {
+    if (midi_active == false){
     syncall = !syncall;
     Display.clear();
     if (syncall == true){
@@ -106,9 +107,23 @@ void swaltcontrol(){
     Display.setSegments(letter_L, 1, 2);
     Display.setSegments(letter_L, 1, 3);
     digitalWrite(12, LOW);}
+    //    Serial.println("sync all");
+  }
+    if (midi_active == true){
+      midi_menu_active = true;
+    Display.setSegments(letter_M, 1, 0);
+    Display.setSegments(letter_M, 1, 1);
+    Display.setSegments(letter_I, 1, 2);
+    Display.setSegments(letter_D, 1, 3);
+    delay(750);
+    Display.setSegments(letter_C, 1, 0);
+    Display.setSegments(letter_O, 1, 1);
+    Display.setSegments(letter_F, 1, 2);
+    Display.setSegments(letter_G, 1, 3);
+    delay(750);
+    }
     msgsent = true;
     lastmsgsent = millis();
-//    Serial.println("sync all");
     longpress8 = false;
-  }
+}
 }

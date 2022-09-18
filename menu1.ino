@@ -298,14 +298,14 @@ void accion_5(){
       }
       arriba = digitalRead(19);
       if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
-        if (membankdec < 5){membankdec = membankdec+1;if(membankdec == 5){membankuni = 0;}}
+        if (membankdec < 3){membankdec = membankdec+1;if(membankdec == 3){membankuni = 0;}}
         else {membankdec = 0;}
         lastarriba = millis();
       }
        abajo = digitalRead(18);
       if ((abajo == HIGH) && (currentMillis - lastabajo > 350)){
         if (membankdec > 0){membankdec = membankdec-1;}
-        else {membankdec = 5;membankuni = 0;}
+        else {membankdec = 3;membankuni = 0;}
         lastabajo = millis();
       }
       
@@ -412,14 +412,14 @@ void accion_4(){
       }
       arriba = digitalRead(19);
       if ((arriba == HIGH) && (currentMillis - lastarriba > 350)){
-        if (membankdec < 5){membankdec = membankdec+1;if(membankdec == 5){membankuni = 0;}}
+        if (membankdec < 3){membankdec = membankdec+1;if(membankdec == 3){membankuni = 0;}}
         else {membankdec = 0;}
         lastarriba = millis();
       }
        abajo = digitalRead(18);
       if ((abajo == HIGH) && (currentMillis - lastabajo > 350)){
         if (membankdec > 0){membankdec = membankdec-1;}
-        else {membankdec = 5;membankuni = 0;}
+        else {membankdec = 3;membankuni = 0;}
         lastabajo = millis();
       }
       

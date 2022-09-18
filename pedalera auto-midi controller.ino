@@ -26,6 +26,17 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 byte midi_active = false;
 byte midichannel = 1;
 byte midichannelchanged = false;
+byte note[]={EEPROM.read(621), EEPROM.read(622), EEPROM.read(623), EEPROM.read(624), EEPROM.read(625), EEPROM.read(626), EEPROM.read(627), EEPROM.read(628)};
+byte command[]={2, 2, 2, 2, 2, 2, 2, 2};
+
+//*********************************************midi menu******************************************************
+byte midi_menustate = 1;
+byte nbutton = 1;
+byte cursor2 = 0;
+byte noteC = 0;
+byte noteD = 0;
+byte noteU = 0;
+byte midi_menu_active = false;
 
 //************************************************************
 //***SET THE NUMBER OF CONTROLS USED**************************
@@ -73,21 +84,21 @@ Pot *POTS[] {};
 //** Command parameter 0=NOTE  1=CC  2=Toggle CC **
 
 //Button BU1(2, 0, 60, 1, 25 );
-Button BU2(3, 2, 102, midichannel, 25 );      //sw3 azul
-Button BU3(4, 2, 103, midichannel, 25 );      //sw7 amarillo
+Button BU2(3, command[0], note[2], midichannel, 25 );      //sw3 azul
+Button BU3(4, command[1], note[6], midichannel, 25 );      //sw7 amarillo
 //Button BU4(5, 0, 63, midichannel, 25 );
 //Button BU5(6, 0, 64, 1, 25 );
-Button BU6(7, 2, 104, midichannel, 25 );      //sw6 verde
-Button BU7(8, 2, 105, midichannel, 25 );      //sw5 azul
+Button BU6(7, command[2], note[5], midichannel, 25 );      //sw6 verde
+Button BU7(8, command[3], note[4], midichannel, 25 );      //sw5 azul
 //Button BU8(9, 2, 64, 1, 5 );
 //Button BU9(10, 2, 64, 1, 5 );
-Button BU10(11, 2, 106, midichannel, 25 );    //sw1 verde
-Button BU16(17, 2, 107, midichannel, 25 );    //sw2 amarillo
-Button BU17(18, 2, 108, midichannel, 25 );    //sw8 azul
-Button BU18(19, 2, 109, midichannel, 25 );    //sw4 verde
+Button BU10(11, command[4], note[0], midichannel, 25 );    //sw1 verde
+Button BU16(17, command[5], note[1], midichannel, 25 );    //sw2 amarillo
+Button BU17(18, command[6], note[7], midichannel, 25 );    //sw8 azul
+Button BU18(19, command[7], note[3], midichannel, 25 );    //sw4 verde
 //*******************************************************************
 //Add buttons used to array below like this->  Button *BUTTONS[] {&BU1, &BU2, &BU3, &BU4, &BU5, &BU6, &BU7, &BU8};
-Button *BUTTONS[] {&BU2, &BU3, &BU6, &BU7, &BU10, &BU16, &BU17, &BU18};
+Button *BUTTONS[] {&BU10, &BU16, &BU2, &BU18, &BU7, &BU6, &BU3, &BU17};
 //*******************************************************************
 
 
@@ -335,6 +346,7 @@ byte indice = 0;
 /////////////////////////////////////////////letras//////////////////////////////////////
 const uint8_t letter_T[] = {SEG_G | SEG_D | SEG_E | SEG_F,};
 const uint8_t letter_R[] = {SEG_E | SEG_G,};
+const uint8_t letter_B[] = {SEG_A | SEG_B | SEG_C | SEG_D | SEG_G | SEG_E | SEG_F,};
 const uint8_t blank[] = {SEG_D,};
 const uint8_t letter_C[] = {SEG_A | SEG_D | SEG_E | SEG_F,};
 const uint8_t letter_L[] = {SEG_D | SEG_E | SEG_F,};
@@ -352,6 +364,8 @@ const uint8_t letter_D[] = {SEG_C | SEG_B | SEG_D | SEG_E | SEG_G,};
 const uint8_t letter_E[] = {SEG_A | SEG_E | SEG_D | SEG_G | SEG_F,};
 const uint8_t letter_X[] = {SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,};
 const uint8_t letter_V[] = {SEG_C | SEG_D | SEG_E,};
+const uint8_t letter_M[] = {SEG_A | SEG_B | SEG_C | SEG_E | SEG_F,};
+//const uint8_t letter_M2[] = {SEG_A | SEG_B | SEG_C | SEG_E | SEG_F,};
 
 //     para saber el tiempo que tardan las acciones
 //unsigned long resta1 = 0;
@@ -423,7 +437,7 @@ void loop() {
   complemento();
   buttonPin = 18;
   button1Pin = 19;
-  first_read();
+  first_read();     
   readButtonState();
   fourthpair();
   releasefunction();
@@ -437,6 +451,10 @@ void loop() {
     msgsent = false;}
     readButtonALTState();
     swaltcontrol();
-    midifunction();    
+    midifunction();   
+    if (midi_menu_active == true){
+    if(midi_menustate == 2){midi_menu_2(); midi_menu_accion_2();}
+    if(midi_menustate == 1){midi_menu_1(); midi_menu_accion_1();} 
+  }
   }
 }

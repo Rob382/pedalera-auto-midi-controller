@@ -82,8 +82,8 @@ if (longpressboth1 == true) {
   if (longpressboth2 == true) {
     midi_active = true;
 //    Serial.println("activando midi");
-    Display.setSegments(letter_N, 1, 0);
-    Display.setSegments(letter_N, 1, 1);
+    Display.setSegments(letter_M, 1, 0);
+    Display.setSegments(letter_M, 1, 1);
     Display.setSegments(letter_I, 1, 2);
     Display.setSegments(letter_D, 1, 3);
     delay(750);
