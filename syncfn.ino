@@ -17,8 +17,9 @@ void syncfn() {
     digitalWrite(ledpin, HIGH);
     Serial.println(sensorValue);
     lastsyncread = millis();
+    lastledsyncread = millis();
   }
-  else {
+  else if ((sensorValue < 50) && (currentMillis - lastledsyncread >= 50)) {
     digitalWrite(ledpin, LOW);
   }
 }

@@ -1,59 +1,85 @@
-
 //////////////////////////////////////////////sw control long///////////////////////////////////////////
 void swcontrol_long_on(){
 
 /////////1st pair/////////
-if (longpressboth == true) {
-    Display.showNumberDec(81, false, 2, 0);
-    Serial.println("longpressboth");
-    longpressboth = false;
-  }
-  if (longpress == true && longpressboth == false) {
-    Display.showNumberDec(10, false, 2, 0);
-    Serial.println("longpress");
-    longpress = false;
-  }
-  const uint8_t msg9[] = {
-  SEG_C | SEG_B | SEG_D | SEG_E | SEG_F,          //u
-  SEG_C | SEG_E | SEG_G,                          //n
-  SEG_C | SEG_B | SEG_D | SEG_E | SEG_G,          //d
-  SEG_C | SEG_D | SEG_E | SEG_G,                  //o
-  };
-  const uint8_t msg10[] = {
-  SEG_C | SEG_B | SEG_D | SEG_E | SEG_F,          //u
-  SEG_C | SEG_E | SEG_G,                          //n
-  SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
-  SEG_E | SEG_G,                                  //r
-  };
-  if (shortpress1 == true) {
-    if (alt == false){
-    Display.setSegments(msg9, 4, 0);
-    msgsent = true;
-    lastmsgsent = millis();
-    shortpress1 = false;}
-    if (alt == true){
-    Display.setSegments(msg10, 4, 0);
-    msgsent = true;
-    lastmsgsent = millis();
-    shortpress1 = false;}
-  }
-/////////2nd pair/////////
-const uint8_t msg3[] = {
-  SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
-  SEG_B | SEG_C | SEG_D | SEG_G | SEG_F,          //Y
-  SEG_C | SEG_E | SEG_G,                          //n
-  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
-};
-  if (longpressboth2 == true) {
-    digitalWrite (sw2ctrl, HIGH);         //activa la salida
-    Serial.println("sw2ctrl HIGH");
-    sw2ctrlstate = true;                  //control de la salida
-    lastSw2Ctrl = millis();               //millis control salida
+if (longpressboth1 == true) {
     sync = !sync;
-        Display.setSegments(msg3, 4, 0);
+        Display.setSegments(letter_S, 1, 0);
+        Display.setSegments(letter_Y, 1, 1);
+        Display.setSegments(letter_N, 1, 2);
+        Display.setSegments(letter_C, 1, 3);
         msgsent = true;
         lastmsgsent = millis();
-    Serial.println("longpressboth2 toogle sync");
+        digitalWrite(ledpin, LOW);
+    Serial.println("longpressboth1 toogle sync");
+    longpressboth1 = false;
+  }
+  if (longpress0 == true && longpressboth1 == false) {
+    Display.showNumberDec(10, false, 2, 0);
+    Serial.println("longpress0");
+    longpress0 = false;
+  }
+  if (shortpress01 == true) {undo_button = true;releaseallsp ();}
+    if(undo_button == true){ 
+    if (alt == false){
+    digitalWrite (sw3ctrl, HIGH);       //activa el switch undo
+    delay(3);
+    Serial.println("sw3ctrl undo switch cd4066 ");
+    sw3ctrlstate = true;                  //control state del switch undo
+    lastSw3Ctrl = currentMillis;               //inicia el conteo de tiempo de activación
+    Display.setSegments(letter_U, 1, 0);
+    Display.setSegments(letter_N, 1, 1);
+    Display.setSegments(letter_D, 1, 2);
+    Display.setSegments(letter_O, 1, 3);
+    msgsent = true;
+    lastmsgsent = millis();
+    Serial.println("undo");
+    undo_button = false;}
+    
+    if (alt == true){
+      if(sync == true){
+        if (oneshotaction == false){
+        digitalWrite (sw3ctrl, HIGH);       //activa el switch undo
+        delay(3);
+    Serial.println("sw3ctrl undo switch cd4066 ");
+    sw3ctrlstate = true;                  //control state del switch undo
+    lastSw3Ctrl = currentMillis;
+    Display.setSegments(letter_U, 1, 0);
+    Display.setSegments(letter_N, 1, 1);
+    Display.setSegments(letter_S, 1, 2);
+    Display.setSegments(letter_R, 1, 3);
+    oneshotaction = true;}
+        if (syncallflag == true){
+      digitalWrite (sw1ctrl, HIGH);       //activa el switch de rec
+      delay(3);
+    Serial.println("activado el switch rec cd4066");
+    sw1ctrlstate = true;                  //control state del switch rec
+    lastSw1Ctrl = currentMillis;
+    msgsent = true;
+    lastmsgsent = millis();
+    Serial.println("undo synced record");
+    undo_button = false;
+    oneshotaction = false;}}
+    
+    if(sync == false){
+      digitalWrite (sw3ctrl, HIGH);       //activa el switch undo
+      delay(3);
+    Serial.println("sw3ctrl undo switch cd4066 ");
+    sw3ctrlstate = true;                  //control state del switch undo
+    lastSw3Ctrl = currentMillis;
+      Display.setSegments(letter_U, 1, 0);
+      Display.setSegments(letter_N, 1, 1);
+      Display.setSegments(letter_D, 1, 2);
+      Display.setSegments(letter_O, 1, 3);
+    msgsent = true;
+    lastmsgsent = millis();
+    Serial.println("undo");
+    undo_button = false;
+    }
+    }
+  }
+/////////2nd pair/////////
+  if (longpressboth2 == true) {
     longpressboth2 = false;
   }
   if (longpress2 == true && longpressboth2 == false) {
@@ -67,25 +93,18 @@ const uint8_t msg3[] = {
     longpress3 = false;
   }
 /////////3rd pair/////////
-const uint8_t msg6[] = {
-  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
-  SEG_D | SEG_E | SEG_F,                          //L
-  SEG_B | SEG_C,                                  //i
-  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
-};
-const uint8_t msg5[] = {
- SEG_A | SEG_D | SEG_E | SEG_F,                  //C
-  SEG_A | SEG_B | SEG_D | SEG_C | SEG_E | SEG_F,  //O
-  SEG_A | SEG_G | SEG_E | SEG_F,                  //F
-  SEG_A | SEG_B | SEG_D | SEG_C | SEG_G | SEG_F,  //g
-};
-
   if (longpressboth3 == true) {
     menu_active = true;
     Serial.println("entrando al menu");
-    Display.setSegments(msg6, 4, 0);
+    Display.setSegments(letter_C, 1, 0);
+    Display.setSegments(letter_L, 1, 1);
+    Display.setSegments(letter_I, 1, 2);
+    Display.setSegments(letter_C, 1, 3);
     delay(750);
-    Display.setSegments(msg5, 4, 0);
+    Display.setSegments(letter_C, 1, 0);
+    Display.setSegments(letter_O, 1, 1);
+    Display.setSegments(letter_F, 1, 2);
+    Display.setSegments(letter_G, 1, 3);
     delay(750);
     Serial.println("longpressboth3");
     longpressboth3 = false;

@@ -1,19 +1,7 @@
-//mensajes usados
-const uint8_t blank[] = {SEG_D,};
-const uint8_t msg2[] = {
-  SEG_A | SEG_D | SEG_E | SEG_F,                  //C
-  SEG_D | SEG_E | SEG_F,                          //L
-};
-const uint8_t msg7[] = {
-  SEG_A | SEG_B | SEG_G | SEG_E | SEG_F,          //P
-  SEG_D | SEG_E | SEG_F,                          //L
-  SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
-  SEG_B | SEG_C | SEG_D | SEG_G | SEG_F,          //Y
-};
-
 ////////////////////////////////////////////////menu functions////////////////////////////////////////////
 void menu_1(){
-  Display.setSegments(msg, 2, 0);
+  Display.setSegments(letter_T, 1, 0);
+  Display.setSegments(letter_R, 1, 1);
   Display.showNumberDec(ntrackdec, false, 1, 2);
   Display.showNumberDec(ntrackuni, false, 1, 3);
 }
@@ -86,7 +74,9 @@ void accion_1(){
       lastcursorpin = millis();
     }
     currentMillis = millis();
-    select = digitalRead(2);
+    button8Pin = analogRead(A6);
+    if (button8Pin <= 500){select = LOW;}
+    if (button8Pin > 500){select = HIGH;}
     menu_out = digitalRead(4);             //boton 4 para salir del menú
     
     if (menu_out == true && currentMillis - lastmenu_out > 500){
@@ -95,12 +85,15 @@ void accion_1(){
     menu_out = false;
     cursor1 = false;
     lastmenu_out = millis();
-    Display.setSegments(msg7, 4, 0);
+    Display.setSegments(letter_P, 1, 0);
+    Display.setSegments(letter_L, 1, 1);
+    Display.setSegments(letter_A, 1, 2);
+    Display.setSegments(letter_Y, 1, 3);
     delay (750);
     return;
   }
   }
-  if (select == HIGH && currentMillis - lastselect > 500){
+  if (select == HIGH && currentMillis - lastselect > 700){
     menustate = 2;
     select = LOW;
     cursor1 = false;
@@ -110,7 +103,8 @@ void accion_1(){
 }
 
 void menu_2(){
-  Display.setSegments(msg2, 2, 0);
+  Display.setSegments(letter_C, 1, 0);
+  Display.setSegments(letter_L, 1, 1);
   nclicksuni = trackuniarray[ntrackuni];
   nclicksdec = trackdecarray[ntrackuni];
   Display.showNumberDec(nclicksdec, false, 1, 2);
@@ -187,9 +181,11 @@ void accion_2(){
       lastcursorpin = millis();
     }
     currentMillis = millis();
-    select = digitalRead(2);
+    button8Pin = analogRead(A6);
+    if (button8Pin <= 500){select = LOW;}
+    if (button8Pin > 500){select = HIGH;}
   } 
-  if (select == HIGH && currentMillis - lastselect > 500){
+  if (select == HIGH && currentMillis - lastselect > 700){
     trackdecarray[ntrackuni] = nclicksdec;    //guarda valores en el arreglo
     trackuniarray[ntrackuni] = nclicksuni;
     menustate = 1;

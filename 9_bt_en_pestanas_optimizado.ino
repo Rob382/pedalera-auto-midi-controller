@@ -1,3 +1,4 @@
+
 /*
    Bas on Tech - LONG PRESS BUTTON
    This course is part of the courses on https://arduino-tutorials.net
@@ -21,10 +22,14 @@ TM1637Display Display(CLK, DIO);
 ///////////////////////////////////////////1st PAIR OF BUTTONS///////////////////////////////////////////
 byte  bothchecker = false;
 byte longpressboth = false;
-
+byte shortpress01 = false;
+byte shortpress0 = false;
+byte longpress01 = false;
+byte longpress0 = false;
+byte longpressboth1 = false;
 //// SWITCH 0 ////
 
-#define buttonPin 4                    // switch pin
+byte buttonPin = 4;                    // switch pin
 byte buttonStatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long buttonLongPressMillis;                // Time in ms when we the button was pressed
@@ -38,9 +43,11 @@ byte buttonState;
 byte shortpress = false;
 byte longpress = false;
 
+byte button0pressed = false;
+
 //// SWITCH 1 ////
 
-#define button1Pin 3                    // switch pin
+byte button1Pin = 3;                    // switch pin
 byte button1StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button1LongPressMillis;                // Time in ms when we the button was pressed
@@ -54,120 +61,43 @@ byte button1State;
 byte shortpress1 = false;
 byte longpress1 = false;
 
+byte button1pressed = false;
+
 ///////////////////////////////////////////2nd PAIR OF BUTTONS///////////////////////////////////////////
-byte  bothchecker2 = false;
 byte longpressboth2 = false;
-
 //// SWITCH 2 ////
-
-#define button2Pin 7                    // switch pin
-byte button2StatePrevious = LOW;                      // previousstate of the switch
-
-unsigned long button2LongPressMillis;                // Time in ms when we the button was pressed
-byte button2StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton2Millis;                 // Timestamp of the latest reading
-
-unsigned long button2PressDuration;                  // Time the button is pressed in ms
-
-byte button2State;
 byte shortpress2 = false;
 byte longpress2 = false;
-
+byte button2pressed = false;
 //// SWITCH 3 ////
-
-#define button3Pin 8                    // switch pin
-byte button3StatePrevious = LOW;                      // previousstate of the switch
-
-unsigned long button3LongPressMillis;                // Time in ms when we the button was pressed
-byte button3StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton3Millis;                 // Timestamp of the latest reading
-
-unsigned long button3PressDuration;
-
-byte button3State;
 byte shortpress3 = false;
 byte longpress3 = false;
+byte button3pressed = false;
 
 ///////////////////////////////////////////3rd PAIR OF BUTTONS///////////////////////////////////////////
-byte  bothchecker3 = false;
 byte longpressboth3 = false;
-
 //// SWITCH 4 ////
-
-#define button4Pin 11                    // switch pin
-byte button4StatePrevious = LOW;                      // previousstate of the switch
-
-unsigned long button4LongPressMillis;                // Time in ms when we the button was pressed
-byte button4StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton4Millis;                 // Timestamp of the latest reading
-
-unsigned long button4PressDuration;                  // Time the button is pressed in ms
-
-byte button4State;
 byte shortpress4 = false;
 byte longpress4 = false;
-
+byte button4pressed = false;
 //// SWITCH 5 ////
-int analogsw5read;
-
-//static const int button5Pin = 16;                    // esta la podría borrar!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-int button5StatePrevious = LOW;                      // previousstate of the switch
-
-unsigned long button5LongPressMillis;                // Time in ms when we the button was pressed
-byte button5StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton5Millis;                 // Timestamp of the latest reading
-
-unsigned long button5PressDuration;
-
-byte button5State;
 byte shortpress5 = false;
 byte longpress5 = false;
+byte button5pressed = false;
 
 ///////////////////////////////////////////4th PAIR OF BUTTONS///////////////////////////////////////////
-byte  bothchecker4 = false;
 byte longpressboth4 = false;
-
 //// SWITCH 6 ////
-
-#define button6Pin 18                    // A6
-byte button6StatePrevious = LOW;                      // previousstate of the switch
-
-unsigned long button6LongPressMillis;                // Time in ms when we the button was pressed
-byte button6StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton6Millis;                 // Timestamp of the latest reading
-
-unsigned long button6PressDuration;                  // Time the button is pressed in ms
-
-byte button6State;
 byte shortpress6 = false;
 byte longpress6 = false;
-
+byte button6pressed = false;
 //// SWITCH 7 ////
-
-#define button7Pin 19                    // A7
-byte button7StatePrevious = LOW;                      // previousstate of the switch
-
-unsigned long button7LongPressMillis;                // Time in ms when we the button was pressed
-byte button7StateLongPress = false;                  // True if it is a long press
-
-unsigned long previousButton7Millis;                 // Timestamp of the latest reading
-
-unsigned long button7PressDuration;
-
-byte button7State;
 byte shortpress7 = false;
 byte longpress7 = false;
+byte button7pressed = false;
 
 ////////////////////////////////////////////switch 8 (alt)/////////////////////////////////////////////
-
-//// SWITCH 8 alt  ////
-
-#define button8Pin 2                    // switch pin
+int button8Pin;                    // switch pin
 byte button8StatePrevious = LOW;                      // previousstate of the switch
 
 unsigned long button8LongPressMillis;                // Time in ms when we the button was pressed
@@ -184,12 +114,13 @@ byte longpress8 = false;
 byte alt = false;                                 //variable para revisar funciones alternas
 
 ////////////////////////////////////////////////// GENERAL /////////////////////////////////////////////
-unsigned long minButtonLongPressDuration = 2000;    // Time we wait before we see the press as a long press
+unsigned long minButtonLongPressDuration = 1500;    // Time we wait before we see the press as a long press
 const int intervalButton = 50;                      // Time between two readings of the button state
 
 unsigned long currentMillis;          // Variabele to store the number of milleseconds since the Arduino has started
 
 unsigned long lastsyncread = 0;
+unsigned long lastledsyncread = 0;
 byte sync = false;
 byte syncallflag = false;
 byte syncall = false;
@@ -205,16 +136,41 @@ byte msgsent = false;
 unsigned long lastmsgsent = 0;
 
 byte oneshotaction = false;                 //variable para comprobar acciones oneshot
+byte singlemsg = false;                          //para cmprobar mensajes de una sola activación
+
+byte out_release_flag = true;
+byte out_release_flag1 = true;
+byte buttoncomp = false;
+byte buttoncomp1 = false;
+
+byte synced_rec = false;                    //variable para mantener activo el sync rec con contador
+byte prevplaysw = false;                    //mantiene activo prev rec
+byte nextplaysw = false;                    //mantiene activo next rec
+byte undo_button = false;
+byte syncedundo = false;
+byte stop_next = false;
+byte stop_prev = false;
+
+byte sum_botton_pessed = false;
 
 ////////////////////////////////////////////switches del cd4066/////////////////////////////////////////////
 byte sw1;
 byte sw2;
 const int sw1ctrl = 9;
 const int sw2ctrl = 10;
+const int sw3ctrl = 14;
+const int sw4ctrl = 16;
+const int sw5ctrl = 15;
 unsigned long lastSw1Ctrl = 0;
 unsigned long lastSw2Ctrl = 0;
+unsigned long lastSw3Ctrl = 0;
+unsigned long lastSw4Ctrl = 0;
+unsigned long lastSw5Ctrl = 0;
 byte sw1ctrlstate;
 byte sw2ctrlstate;
+byte sw3ctrlstate;
+byte sw4ctrlstate;
+byte sw5ctrlstate;
 
 ///////////////////////////////////////////////////menú///////////////////////////////////////////////////
 byte trackuniarray[10];
@@ -244,63 +200,37 @@ unsigned long lastselect = 0;
 unsigned long lastabajo = 0;
 unsigned long lastmostrararray = 0;
 unsigned long lastcursorpin = 0;
-const uint8_t msg[] = {
-  SEG_G | SEG_D | SEG_E | SEG_F,                  //t
-  SEG_E | SEG_G,                                  //r
-};
+/////////////////////////////////////////////letras//////////////////////////////////////
+const uint8_t letter_T[] = {SEG_G | SEG_D | SEG_E | SEG_F,};
+const uint8_t letter_R[] = {SEG_E | SEG_G,};
+const uint8_t blank[] = {SEG_D,};
+const uint8_t letter_C[] = {SEG_A | SEG_D | SEG_E | SEG_F,};
+const uint8_t letter_L[] = {SEG_D | SEG_E | SEG_F,};
+const uint8_t letter_S[] = {SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,};          //S
+const uint8_t letter_Y[] = {SEG_B | SEG_C | SEG_D | SEG_G | SEG_F,};          //Y
+const uint8_t letter_N[] = {SEG_C | SEG_E | SEG_G,};                          //n
+const uint8_t letter_A[] = {SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,};
+const uint8_t letter_O[] = {SEG_C | SEG_D | SEG_E | SEG_G,};                  //o
+const uint8_t letter_F[] = {SEG_A | SEG_G | SEG_E | SEG_F,};                  //F
+const uint8_t letter_G[] = {SEG_A | SEG_B | SEG_D | SEG_C | SEG_G | SEG_F,};  //g
+const uint8_t letter_I[] = {SEG_B | SEG_C,};
+const uint8_t letter_P[] = {SEG_A | SEG_B | SEG_G | SEG_E | SEG_F,};
+const uint8_t letter_U[] = {SEG_C | SEG_B | SEG_D | SEG_E | SEG_F,};
+const uint8_t letter_D[] = {SEG_C | SEG_B | SEG_D | SEG_E | SEG_G,};
+const uint8_t letter_E[] = {SEG_A | SEG_E | SEG_D | SEG_G | SEG_F,};
+const uint8_t letter_X[] = {SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,};
 
-///////////////////////////////////////////undo messages///////////////
-  
-  const uint8_t msg11[] = {
-  SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
-  SEG_B | SEG_C | SEG_D | SEG_G | SEG_F,          //Y
-  SEG_C | SEG_B | SEG_D | SEG_E | SEG_F,          //u
-  SEG_C | SEG_E | SEG_G,                          //n
-  };
-
-  /////////////////////////////////////next+rec prev+rec messages///////////////////
-  const uint8_t msg16[] = {
-    SEG_C | SEG_E | SEG_G,                          //n
-    SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,          //H/x
-    SEG_G | SEG_D | SEG_E | SEG_F,                  //t
-    SEG_E | SEG_G,                                  //r
-    };
-    const uint8_t msg17[] = {
-    SEG_A | SEG_B | SEG_G | SEG_E | SEG_F,          //P
-    SEG_E | SEG_G,                                  //r
-    SEG_A | SEG_E | SEG_D | SEG_G | SEG_F,          //E
-    SEG_E | SEG_G,                                  //r
-    };
-    const uint8_t msg19[] = {
-    SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
-    SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
-    SEG_G | SEG_D | SEG_E | SEG_F,                  //t
-    SEG_A | SEG_B | SEG_G | SEG_E | SEG_F,          //P
-    };
-    const uint8_t msg18[] = {
-    SEG_A | SEG_C | SEG_D | SEG_G | SEG_F,          //S
-    SEG_A | SEG_B | SEG_G | SEG_E | SEG_F,          //P
-    SEG_D | SEG_E | SEG_F,                          //L
-    SEG_A | SEG_B | SEG_C | SEG_G | SEG_E | SEG_F,  //A
-    };
 void setup() {
   Serial.begin(9600);                 // Initialise the serial monitor
 
   pinMode(buttonPin, INPUT);          // set buttonPin as input
-  pinMode(button1Pin, INPUT);          // set buttonPin as input
-  pinMode(button2Pin, INPUT);          // set buttonPin as input
-  pinMode(button3Pin, INPUT);          // set buttonPin as input
-  pinMode(button4Pin, INPUT);          // set buttonPin as input
-//  pinMode(button5Pin, INPUT);          // set buttonPin as input
-  pinMode(button6Pin, INPUT);          // set buttonPin as input
-  pinMode(button7Pin, INPUT);          // set buttonPin as input
-  pinMode(button8Pin, INPUT);          // set buttonPin as input
-  //  pinMode(sw1pin, INPUT);          // set buttonPin as input
-  //  pinMode(sw2pin, INPUT);          // set buttonPin as input
-  pinMode(A0, INPUT);
-  pinMode(A1, INPUT);
-  //pinMode(A6, INPUT);
-  //pinMode(A7, INPUT);
+  pinMode(button1Pin, INPUT);         // set buttonPin as input
+  pinMode(2, OUTPUT);                 
+  pinMode(12, OUTPUT);                 
+  pinMode(14, OUTPUT);
+  pinMode(15, OUTPUT);
+  pinMode(16, OUTPUT);
+  
   Serial.println("Press button");
 
   Display.setBrightness(5);
@@ -308,7 +238,8 @@ void setup() {
 }
 
 void inicio(){
-    Display.setSegments(msg, 2, 0);
+    Display.setSegments(letter_T, 1, 0);
+    Display.setSegments(letter_R, 1, 1);
     Display.showNumberDec(ntrackdec, false, 1, 2);
     Display.showNumberDec(ntrackuni, false, 1, 3);
     clickstocount = ((trackdecarray[ntrackuni] * 10) + trackuniarray[ntrackuni]);
@@ -318,33 +249,36 @@ void inicio(){
 
 void loop() {
   currentMillis = millis();    // store the current time
-  if (msgsent == true && currentMillis - lastmsgsent >= 2000){//mantiene mensajes por 2 segundos en pantalla
+  if (msgsent == true && currentMillis - lastmsgsent >= 1500){//mantiene mensajes por 2 segundos en pantalla
     inicio();
     msgsent = false;
   }
+  buttonPin = 4;
+  button1Pin = 3;
+  first_read();
   readButtonState();           // read the button state
-  readButton1State();
-  readButton2State();
-  readButton3State();
-  readButton4State();
-  readButton5State();
-  readButton6State();
-  readButton7State();
-  readButton8State();
-  if (sync == true) {
-    syncfn ();
-  }
-  if (syncall == true){
-    if (syncallflag == true){swcontrol_short_on();}} //si se activa syncall espera a la flag para activar las salidas
-  if (syncall == false){
-    swcontrol_short_on();}        //si se desactiva syncall activa salidas sin esperar
-  swcontrol_long_on();
-  swaltcontrol();
-  swcontrol_off ();
-  if (menu_active == true){
-    if(menustate == 3){menu_3();}
-    if(menustate == 2){menu_2(); accion_2();}
-    if(menustate == 1){menu_1(); accion_1();}
-    inicio ();
-  }
+  firstpair();
+  releasefunction();
+  complemento();
+  buttonPin = 7;
+  button1Pin = 8;
+  first_read();
+  readButtonState();
+  secondpair();
+  releasefunction();
+  complemento();
+  buttonPin = 11;
+  button1Pin = 17;
+  first_read();
+  readButtonState();
+  thirdpair();
+  releasefunction();
+  complemento();
+  buttonPin = 18;
+  button1Pin = 19;
+  first_read();
+  readButtonState();
+  fourthpair();
+  releasefunction();
+  complemento();  
 }
