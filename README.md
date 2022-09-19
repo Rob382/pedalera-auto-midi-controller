@@ -1,5 +1,5 @@
 # Pedalera-auto-midi-controller (BETA)
-Este proyecto es el diseño de una botonera como modificación a un pedal de looper para guitarra la cual automatiza secuencias de pulsaciones a una velocidad que no puede ser replicada por una persona, además se le agregó una segunda función como controlador midi
+Este proyecto es el diseño (hardware y software) de una botonera como modificación a un pedal de looper para guitarra la cual automatiza secuencias de pulsaciones a una velocidad que no puede ser replicada por una persona, además se le agregó una segunda función como controlador midi
 
 El diseño está hecho para no requerir de un ordenador para ser configurado, todo se puede hacer desde los mismos botones controlando distintos menús internos.
 
